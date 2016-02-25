@@ -1,0 +1,83 @@
+* Git Init
+#+NAME: giturl
+#+BEGIN_SRC elisp :var name=""  :var mod=""
+(concat "https://github.com/"  name   "/" mod ".git")
+#+END_SRC
+
+#+NAME: gitinit
+#+BEGIN_SRC sh  :var project=""
+git init
+git remote add origin $project
+git remote -v
+#+END_SRC
+
+#+RESULTS:
+| Reinitialized | existing                                               | Git     | repository | in | /usr/local/src/microlibrary/friends-aneesha/.git/ |
+| origin        | [[https://github.com/chowdhuryashraf/friends-aneesha.git]] | (fetch) |            |    |                                                   |
+| origin        | [[https://github.com/chowdhuryashraf/friends-aneesha.git]] | (push)  |            |    |                                                   |
+* Git TAG
+#+NAME: gittag
+#+BEGIN_SRC sh :var tag=""
+git tag $tag
+#+END_SRC
+
+#+RESULTS:
+
+* DONE Fork A Repo
+  DEADLINE: <2016-01-06 বুধ>
+  CLOCK: [2016-01-06 বুধ 00:59]--[2016-01-06 বুধ 02:28] =>  1:29
+** On GitHub, navigate to your fork of the  repository.
+***  https://github.com/chowdhuryashraf/literate-emacs.git
+** Clone repo
+:PROPERTIES:
+:dir: ../literate-emacs
+:END:
+
+#+BEGIN_SRC sh :dir /home/rks :results output replace
+git clone https://github.com/chowdhuryashraf/literate-emacs.git
+#+END_SRC
+
+#+RESULTS:
+** Type git remote -v and press Enter. You'll see the current configured remote repository for your fork.
+#+BEGIN_SRC sh :results output replace
+git remote -v
+#+END_SRC
+
+#+RESULTS:
+=origin	https://github.com/chowdhuryashraf/organizer.git (fetch)
+origin	https://github.com/chowdhuryashraf/organizer.git (push)=
+** Type git remote add upstream, and then paste the URL you copied in Step 2 and press Enter. It will look like this:
+#+BEGIN_SRC sh
+git remote add upstream https://github.com/eschulte/emacs24-starter-kit.git
+#+END_SRC
+
+#+RESULTS:
+** To verify the new upstream repository you've specified for your fork, type git remote -v again. You should see the URL for your fork as origin, and the URL for the original repository as upstream
+#+BEGIN_SRC sh
+git remote -v
+#+END_SRC
+
+#+RESULTS:
+| origin   | https://github.com/chowdhuryashraf/organizer.git (fetch)    |
+| origin   | https://github.com/chowdhuryashraf/organizer.git (push)     |
+| upstream | https://github.com/eschulte/emacs24-starter-kit.git (fetch) |
+| upstream | https://github.com/eschulte/emacs24-starter-kit.git (push)  |
+
+
+
+** Syncing a fork
+ref: https://help.github.com/articles/syncing-a-fork/
+** ref
+https://help.github.com/articles/fork-a-repo/
+* Remove remote origin
+#+BEGIN_SRC sh
+git remote rm origin
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh
+git remote -v
+#+END_SRC
+
+#+RESULTS:

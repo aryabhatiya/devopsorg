@@ -1,0 +1,61 @@
+* Tasks
+** TODO create org sh
+#+BEGIN_SRC elisp
+(fset 'orgsh
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("<s	sh" 0 "%d")) arg)))
+(define-key global-map "\C-c\C-xs" 'orgsh)
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+;; Original keys: < s TAB s h C-n
+
+Command: last-kbd-macro
+Key: none
+
+Macro:
+
+<			;; self-insert-command
+s			;; self-insert-command
+TAB			;; org-cycle
+s			;; self-insert-command
+h			;; self-insert-command
+C-n			;; next-line
+#+END_EXAMPLE
+   [2016-01-18 Mon]
+   [[file:/usr/local/src/microlibrary/friends-aneesha/setup.org::*Prepare%20Moudle%20Name%20%3D%20directory%20name][Prepare Moudle Name = directory name]]
+** TODO find command with cmdaync
+#+name: finds
+#+BEGIN_SRC sh :var dir="/" file="pandoc\\*" :noweb yes
+echo "find $dir -name  $file"
+#+END_SRC
+
+#+RESULTS: find
+: find / -name  pandoc\*
+#+name: find
+#+BEGIN_SRC :var dir="/" file="pandoc\\*" :noweb yes
+<<finds>>
+<<cmdaync>>
+#+END_SRC
+
+
+   [2016-01-19 Tue]
+   [[file:/usr/local/src/microlibrary/friends-aneesha/setup.org::*Install%20Pandoc][Install Pandoc]]
+** TODO test Inline if
+#+BEGIN_SRC sh
+if [ $counter -eq 1 ] then; echo "true";
+#+END_SRC
+
+   [2016-01-21 Thu]
+   [[file:/usr/local/src/pipeserver/setup.org::*check_pipeserver_running][check_pipeserver_running]]
+** TODO tut r1930 5445
+** TODO lisp code
+     ,(unless (and (getenv "ORG_HOME")
+                  (file-directory-p (expand-file-name "lisp"
+                                                      (getenv "ORG_HOME"))))
+       '(require 'org))
+
+   [2016-01-21 Thu]
+   [[file:/usr/local/src/literate-devops/init.el::%3B%3B%20load%20up%20the%20starter%20kit][file:/usr/local/src/literate-devops/init.el::;; load up the starter kit]]
+** TODO test
+   [2016-01-22 Fri]
+   [[file:/usr/local/src/literate-devops/starter-kit-org.org::*Org%20Capture][Org Capture]]

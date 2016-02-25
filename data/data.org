@@ -1,0 +1,6 @@
+| mark johanson | waffle  | iron | 80 | 2 |
+| mark johanson | blender |  200 |  1 |   |
+| mark johanson | knife   |   10 |  4 |   |
+| Nikita Smith  | waffle  | iron | 80 | 1 |
+| Nikita Smith  | knife   |   10 |  2 |   |
+| Nikita Smith  | nuts    |   20 |  3 |   |

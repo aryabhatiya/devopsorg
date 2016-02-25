@@ -1,0 +1,201 @@
+#+BEGIN_SRC sh :exports none
+wkhtmltopdf cv.html output/ash_funtasticlabs.pdf
+#+END_SRC
+#+RESULTS:
+
+# #+SETUPFILE: setup/theme-bigblow-local.setup
+# #+SETUPFILE: setup/theme-readtheorg-local.setup
+#+TITLE: Résumé of ASHRAR AHMED KHAN CHOUDHURY
+# #+DATE: <2015-11-18 বুধ>
+#+AUTHOR: ASHRAR AHMED KHAN CHOUDHURY
+#+EMAIL: chowdhury.k.ashraf@gmail.com
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
+#+OPTIONS: d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:nil
+#+OPTIONS: todo:t |:t
+#+CREATOR: 
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+
+# * Address
+#+ATTR_HTML: :alt pic/forcv101 image :title ASHIK :align right :style \"width:150px;height:150px;\"
+[[./pic/forcv101.jpg]]
+# #+BEGIN_HTML 
+# <div id="outline-container-sec-1" class="outline-2">
+# <h2 id="sec-1"><span class="section-number-2"></span><center> Choudhury Ashraf ( ASHIK )</center></h2>
+# <div class="outline-text-2" id="text-1">
+
+# <div class="figure">
+# <p><img src="./pic/forcv101.jpg" alt="pic/forcv101 image" title="ASHIK" align="right" style="\&quot;width:150px;height:150px;\&quot;" />
+# </p>
+# </div>
+# #+END_HTML
+| Home   | H# 192, R# 5 , Mirpur DOHS , Dhanka |
+| Mobile | +88 0 1758538302                    |
+| E-mail | chowdhury.k.ashraf@gmail.com        |
+* Career Objective
+** Writing functional apps with proven design patterns and old wisdom. 
+** Universal responsive font-end Apps design once deploy anywhere. :UI:UX:WEB:DESKTOP:IOS:ANDROID:RASHBARRYPI:
+* Responsibilities & Qualifications 
+** Full stack Application Development for Real-time Systems. 
+| Position                 | Company                     |       | Department           | From         | To           | Years |
+|--------------------------+-----------------------------+-------+----------------------+--------------+--------------+-------|
+| Senior Software Engineer | Software Global Consultancy | //SGC | Solution Development | <2013-06-01> | <2015-12-30> |   2.6 |
+|--------------------------+-----------------------------+-------+----------------------+--------------+--------------+-------|
+|                          |                             |       |                      |              | Total Years  |   2.6 |
+*** Past Employment History    
+| Position                 | Company                                            |         | Department                           | From         | To           | Years |   |
+|--------------------------+----------------------------------------------------+---------+--------------------------------------+--------------+--------------+-------+---|
+| System Engineer          | Grammenphone Networks                              | GP      | Operation Systems and Software (OSS) | <2007-06-10> | <2008-06-01> |   1.0 |   |
+| Lead Engineer            | Samsung Bangladesh R&D Center                      | SBRC    | Mobile Development                   | <2010-05-01> | <2011-07-30> |   1.2 |   |
+| Senior Software Engineer | Eyeball Networks                                   | EYEBALL | Messenger & SDK Development          | <2008-08-01> | <2009-03-30> |   0.7 |   |
+| Assistant Director       | Bangladesh Telecommunication Regulatory Commission | BTRC    | Systems and Services                 | <2009-05-01> | <2011-02-30> |   1.8 |   |
+|--------------------------+----------------------------------------------------+---------+--------------------------------------+--------------+--------------+-------+---|
+|                          |                                                    |         |                                      |              | Total Years  |   4.7 |   |
+#+TBLFM: $7=($6-$5)/365;%.1f::@6$7=vsum(@2$7..@5$7)
+# | Senior Software Engineer | REVE System                                      | REVE     | <2009-03-01> | <2009-04-30> |    .1 |
+# | Software Engineer        | Genuity System                                   | DhakaTel | <2006-02-02> | <2007-05-30> |     1 |
+# *** Specialization
+#+TBLFM: $7=($6-$5)/365;%.1f::@3$7=vsum(@2$7..@2$7)
+*** Functional JavaScript Programming in MVU pattern. 
+**** Functional State Management.			       :REDUX:FRP:FP:
+***** Models(M)			     :IMMUTABLEJS:LIST:MAP:TREE:LOCALSTORAGE:
+***** Update(U)						     :REDUCER:EVENTS:
+***** Authorization				     :REST:JSON:LOCALSTORAGE:
+**** View(V) with Pure UI rendering.			:REACTJS:COMPOSITION:
+**** Web-component based UI templating, structuring and implementation. :REACTJS:JSX:REACTROUTER:
+***** Managing CSS with most efficient way. 		   :INLINESYLE:ICCSS:
+***** Real-time Data Visualization. :VICTORYJS:DASHBOARDS:SOCKETIO:SVG:FLEXBOX:
+**** Adopt Efficient Time Travel Debugging.   :HOTLOADERS:WEBPACK::CHROMEDEV:
+**** Function as First Class citizen, Higher Order Functions. :JAVASCRIPT:LISP:CLOJURE:HASKELL:
+***** Pure Functional programming, Pure UI Rendering. 	    :REACTJS:
+***** Closures, Currying. 				   :LOADSHJS:CLOJURE:
+***** Decorator, Generator, Lambda - Map Reduce, Recursion. :BABELJS:ECMAC2016:ECMA2015:CLOJURE:
+***** Factory Function and Prototypical OO. :FUNCTIONAL_JAVASCRIPT:COMPOSITION:
+*** JSON based MicroServices.				      :MICROSERVICES:
+**** JAVASCRIPT			    :NODEJS:NODEJS:RXJX:SOCKETIO:
+**** PYTHON 					 :FLASK:ZEROMQ:GEVENT:
+**** Message Queues.					       :ZEROMQ:RADIS:
+**** Event Driven Systems.				 :NODEJS:GVENTS:J2EE:
+*** TDD Unit testing which produce less bugs in production.		:TTD:
+**** Mastering Virtual DOM for Unit testing.			:JSDOM:MOCHA:
+**** Unbarred code into units using Injection Pattern and Facades. :DESIGN:PATTERNS:
+**** Mandatory code review.				   :PEER_PROGRAMMING:
+**** Unit test for every commit.		   :MOCHA:CHI:GIT:MAGIT:NODE:
+*** DevOps for System automation and Infrastructure Building. 
+***** PYTHON						:SALT:
+***** JavaScript	   :WEBPACK:WEBPACKDEV:GULP:NODEJS:HOTLOADER:
+***** General		:EMACS:MAGIT:GIT:SVN:EDIFF3:APTGET:LINUX:XMONAD:LISP:
+*** Database and Cache Server optimization. 
+***** Implemented Stored procedure for calculation KPI. :ORACLE:STORE:PROCUDURE:
+***** Experienced in SQL query, Stored procedure, Transaction, ORM. :ORACLE:SQLALCALAMY:MYSQL:POSTGRE:SQLLITE:
+***** Experienced Memcache, atomic operations implementation. 	:RADIS:MONGO:
+***** Experience in IN-MEMORY database advanced key-value store.    :RADIS:
+** Sound Communication and management skills
+**** Project Management skills for implementing mature product delivery and team building. :GTD:
+*** Leading conferences and seminars
+| Training Title                   | Topic                    | Institute    | Country    | Location      | Year | Duration |
+|----------------------------------+--------------------------+--------------+------------+---------------+------+----------|
+| Programming SAMSUNG GSM Platform | Embaded System           | SBRC         | India      | SNMC, Delhi   | 2010 |       30 |
+| Next Generation Network          | 3g, 4G, LTE              | SATRC        | Srilanka   | STRC,Colombo  | 2011 |        3 |
+| Next Generation Network          | 3G, 4G, LTE              | TRI          | India      | BSNL,Delhi    | 2011 |        3 |
+| GMS Platform and Real-time OS    | Real time OS (RTOS), GMS | Grameenphone | Bangladesh | Gulshan,Dhaka | 2008 |       30 |
+*** Language Proficiency
+| Language | Reading | Writing | Speaking |
+|----------+---------+---------+----------|
+| English  | High    | High    | Medium   |
+
+** Core Telecommunication Integration 
+
+***** Install SS7 card on Soft-switch.		:SANGOMA:DEGIUM:SS7:ASTERISK:
+***** Develop and Integrate Load Balancing & fail over server.	   :OPENSIPS:
+***** Routing server, Call Queue, IVR, CDR and.		    :FRESWITCH:MYSQL:
+***** Accounting, Authorization, Authorization, Prepaid Billing. :C:CPP:PYTHON:RUBYonRAILS:RADIS:MONGODB:
+***** Monitoring, Alarm generations, Network Operation, System Automation. :J2EE:PYTHON:ORACLE:
+***** Server side scripting Backup and recovery and system automation. :LINUX:SOLARIS:PYTHON:BASH:VI:SHELL:EMACS:
+***** System administrator in Linux and Solaris. :SHELL:PERL:PYTHON:AWK:REGEX:
+***** Scalable and distributed Soft-switch Design & Implementation. :SIP:RTP:PYTHON:RADIS:MONGO:
+***** Design & Implementation of propitiatory protocol.		      :CPP:C:
+****** Removing voice signature and voice packet compression for gateways and SIP clients. 
+***** Release new Mobile handsets on GSM platform.	   :SAMSUNG:RTK:RTOS:
+****** Localization feature for Middle East and South Africa reason. :GSM:EMBADED:
+****** Bug fixing on audio and FM radio driver modules.		 :C:RTK:RTOS:
+***** Developed VOIP signature detection algorithm. :PYTHON:LIBCAP:ROUTING:CISCO:
+****** Real time data packet sniffer from International Internet Gateway – Bangladesh.
+***** Worked on Automatic network detection module for SIP client in Symbian. 
+***** Worked Eyeball API.		    :SIP:STUN:TURN:HTTP:ICE:XMPP:CPP:
+****** Fixing previous known issues and Bugs.
+****** Schedule Releases.
+****** Provided tech support.
+****** Provided demos to new customers.
+****** Modified test web interface of Eyeball SDK for better user experience. :HTML:JAVASCRIPT:
+****** Implementation of Web Messenger and web SDK. :SIP:XMPP:JABBER:CPP:C:SIP:
+***** Develop SIP session module for Grace full Disconnect.  :SIP:C:OPENSIPS:
+***** Develop RTP protocol Compression module on Media Gateway. :RTPPROXY:VPN:C:PYTHON:
+* Academic Qualification
+**** Exams
+| Exam Title              | Concentration/Major  | Institute                                    |      | Result      | Year |
+|-------------------------+----------------------+----------------------------------------------+------+-------------+------|
+| BSC in Computer Science | Computer Engineering | American International University Bangladesh | AIUB | CGPA:3.59/4 | 2006 |
+| HSC                     | Science              | Rajshahi Cadet College                       | RCC  | Marks : 790 | 2000 |
+|-------------------------+----------------------+----------------------------------------------+------+-------------+------|
+#+BEGIN_HTML
+<br/>
+#+END_HTML
+**** Academic Achievements 
+***** ACM ICPC 2004 Regional Contest 
+****** Team name: AIUB Fractal 
+****** Hosted by North South University, Bangladesh
+****** Position: 19th
+***** AIPC 2004 inter university programming contest 
+****** Team name: AIUB Fractal
+****** Hosted by American International University, Bangladesh
+****** Position: 14th
+***** NCPC 2003 nation programming contest 
+****** Team name: AIUB Fractal
+****** Hosted by Southeast University, Bangladesh
+****** Position: 16h 
+* Personal Details
+**** Famaily Details
+| Father's Name    | Golam Kibria     |
+| Date of Birth    | October 30, 1985 |
+| Gender           | Male             |
+| Marital Status   | Married          |
+| Nationality      | Bangladeshi      |
+| Current Location | Dhaka            |
+**** How I spend my free time
+I love traveling and meeting people and introduce with different culture.
+I spend free time with my family and colleges. 
+I love Reading book and Google and YouTube technology. 
+I also Love watching Si-Fy movies and games.
+
+# **** Reference 
+# #+ATTR_HTML: :border 2 :rules all :frame border
+# | Name         | Salman Maruf Iftee                |
+# | Organization | Grameenphone IT                   |
+# | Designation  | Senior Spetialist                 |
+# | Phone (Off.) | 8801711081123                     |
+# | Relation     | Professional                      |
+# |              |                                   |
+# | Name         | Mohammad Rezwan                   |
+# | Organization | System Architect at bKash Limited |
+# | Designation  | Phone: +8801711504614             |
+# | Phone (Off.) | email: mr.shafin@gmail.com        |
+# | Relation     | Professional                      |
+# |              |                                   |
+# | Name         | MM Mamunuzzaman                   |
+# | Organization | CEO, Software Global Consultancy  |
+# | Designation  | Phone: +8801726427499             |
+# | Phone (Off.) | email: m.mamunuzzaman@sgcsoft.net |
+# | Relation     | Professional                      |
+* Signature 
+#+BEGIN_HTML
+<br/>
+<br/>
+<hr/>
+#+END_HTML
+

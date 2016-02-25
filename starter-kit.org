@@ -1,0 +1,456 @@
+#+TITLE: Emacs Starter Kit (http://github.com/chowdhuryashraf/literate-devops)
+#+OPTIONS: toc:2 num:nil ^:nil
+* Org
+** Code blocks
+*** Load Language
+   :PROPERTIES:
+   :CUSTOM_ID: babel
+   :END:
+This activates a number of widely used languages, you are encouraged
+to activate more languages using the customize interface for the
+`=org-babel-load-languages=' variable, or with an elisp form like the
+one below.  The customize interface of `=org-babel-load-languages='
+contains an up to date list of the currently supported languages.
+#+begin_src emacs-lisp
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((emacs-lisp . t)
+         (lisp . t)
+         (sh . t)
+         (js .t )
+         (haskell . t)
+         (python . t)))
+#+end_src
+*** default executable
+   :PROPERTIES:
+   :CUSTOM_ID: babel_eval_yes
+   :END:
+
+You are encouraged to add the following to your personal configuration
+although it is not added by default as a security precaution.
+#+begin_src emacs-lisp
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+
+** Code block fontification
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-fontification
+   :END:
+The following displays the contents of code blocks in Org-mode files
+using the major-mode of the code.  It also changes the behavior of
+=TAB= to as if it were used in the appropriate major mode.  This means
+that reading and editing code form inside of your Org-mode files is
+much more like reading and editing of code using its major mode.
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+#+end_src
+
+#+RESULTS:
+: t
+
+** Load Babel Libraries 					     :DEVOPS:
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-org-devops
+   :END:
+
+#+BEGIN_SRC emacs-lisp 
+  (org-babel-lob-ingest (expand-file-name "~/org/devops.org"))
+  (defun devops()
+      (interactive)
+      (org-babel-lob-ingest (expand-file-name "~/org/devops.org")))
+#+END_SRC
+
+#+RESULTS:
+: 19
+   
+** Org-Mode Hook -- Keybindings
+   :PROPERTIES:
+   :CUSTOM_ID: keybindings
+   :END:
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+                (local-set-key "\M-\C-n" 'outline-next-visible-heading)
+                (local-set-key "\M-\C-p" 'outline-previous-visible-heading)
+                (local-set-key "\M-\C-u" 'outline-up-heading)
+                ;; table
+                (local-set-key "\M-\C-w" 'org-table-copy-region)
+                (local-set-key "\M-\C-y" 'org-table-paste-rectangle)
+                (local-set-key "\M-\C-l" 'org-table-sort-lines)
+
+                ;; display images
+                (local-set-key "\M-I" 'org-toggle-iimage-in-org)))
+#+end_src
+
+** Speed keys
+   :PROPERTIES:
+   :CUSTOM_ID: speed-keys
+   :END:
+Speed commands enable single-letter commands in Org-mode files when
+the point is at the beginning of a headline, or at the beginning of a
+code block.
+
+See the `=org-speed-commands-default=' variable for a list of the keys
+and commands enabled at the beginning of headlines.  All code blocks
+are available at the beginning of a code block, the following key
+sequence =C-c C-v h= (bound to `=org-babel-describe-bindings=') will
+display a list of the code blocks commands and their related keys.
+
+#+begin_src emacs-lisp
+  (setq org-use-speed-commands t)
+#+end_src
+
+** Org Capture
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-org-capture
+   :END:
+Capture lets you quickly store notes with little interruption of your
+work flow.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
+#+RESULTS:
+: org-capture
+
+**  Clocking work time
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-org-clock
+   :END:
+Org mode allows you to clock the time you spend on specific tasks in a project. When you start working on an item, you can start the clock. When you stop working on that task, or when you mark the task done, the clock is stopped and the corresponding time interval is recorded. It also computes the total time spent on each subtree1 of a project. And it remembers a history or tasks recently clocked, so that you can jump quickly between a number of tasks absorbing your time.
+
+To save the clock history across Emacs sessions, use
+
+#+BEGIN_SRC emacs-lisp
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+#+END_SRC
+
+#+RESULTS:
+: org-capture
+
+** Org Agenda files
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-org-agenda
+   :END:
+Capture lets you quickly store notes with little interruption of your
+work flow.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-agenda-files '("~/org" ))
+#+END_SRC
+
+#+RESULTS:
+| ~/org | ~/literate-emacs/ |
+** Closing items
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-org-closing-items
+   :END:
+Capture lets you quickly store notes with little interruption of your
+work flow.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-log-done 'time)
+(setq org-log-done 'note)
+#+END_SRC
+
+#+RESULTS:
+: time
+
+** The Library of Babel
+   :PROPERTIES:
+   :CUSTOM_ID: library-of-babel
+   :END:
+The library of babel contains makes many useful functions available
+for use by code blocks in *any* emacs file.  See the actual
+=library-of-babel.org= (located in the Org-mode =contrib/babel=
+directory) file for information on the functions, and see
+[[http://orgmode.org/worg/org-contrib/babel/intro.php#library-of-babel][worg:library-of-babel]] for more usage information.
+
+Code blocks can be loaded into the library of babel from any Org-mode
+file using the `org-babel-lob-ingest' function.
+
+* Installation
+   :PROPERTIES:
+   :CUSTOM_ID: installation
+   :END:
+*** Introduction
+**** TODO Install Emacs version 24 or greater. 
+***** TODO Installation In Linux Desktop
+****** TODO Arch Linux 
+****** TODO Debain / Ubuntu 
+***** TODO Installation In Linux Server 
+***** TODO Installation in Max OSX
+*** [[~/org][org directory]] backup
+#+BEGIN_SRC sh
+mv ~/org ~/backups
+ls ~
+#+END_SRC
+
+#+RESULTS:
+: abc.wav
+
+*** Tangle Code Block
+#+NAME: initemacs
+#+begin_src sh :noweb yes
+  emacs -q -l <<pwd()>>/init.el --eval "(run-hooks 'after-init-hook)" $1
+#+end_src
+
+#+call: wrap("initemacs") :results raw
+
+#+NAME: initemacs_tofile
+#+BEGIN_SRC python :session :noweb yes :post fwrite("em.sh",*this*)
+"""
+<<initemacs>>
+"""
+#+END_SRC
+
+#+RESULTS: initemacs_tofile
+: nil
+
+#+call: fread("em.sh")
+
+#+RESULTS:
+: 
+: emacs -q -l /Users/mrfrp/org/init.el --eval "(run-hooks 'after-init-hook)" $1
+
+*** Minimal Emacs Configuretion
+**** On User or Desktop Environment
+#+BEGIN_SRC sh :var path=pwd()   :dir /sudo:root@localhost:/usr/local/bin
+  ls -la $path/em.sh
+  cp $path/em.sh  em
+  chmod 755 em
+#+END_SRC
+
+#+RESULTS:
+
+**** On Superuser / Server Environment
+#+BEGIN_SRC sh :var path=pwd()
+ls -la $path/em.sh
+cp $path/em.sh  /bin/em
+chmod 755 /bin/em
+ls -la /bin/em
+#+END_SRC
+
+#+RESULTS:
+| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /usr/local/src/literate-devops/em.sh |
+| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                                         |
+
+*** Close emacs , Restart emacs using "em" command
+*** Build [[~/org/pipeserver.org][ PipeServer ]]
+*** Run "pipeserver" in command line
+*** Configure Prelude
+**** clone  backup previous	
+***** Backup
+#+BEGIN_SRC sh :dir ~
+mv .emacs.d backup
+#+END_SRC
+
+#+RESULTS:
+***** Clone
+#+NAME: prelude_git
+#+BEGIN_SRC sh 
+git clone git://github.com/bbatsov/prelude.git prelude
+#+END_SRC
+
+***** Run Aync  
+#+NAME: prelude_git_aync
+#+BEGIN_SRC python :session :noweb yes :post cmdaync(*this*)
+"""<<prelude_git>>"""
+#+END_SRC
+
+#+RESULTS: prelude_git_aync
+: command  is sended to /tmp/org
+
+**** make aync and copy the results
+#+call: wrap("prelude_git", "aync") :results raw
+
+**** copy prelude to .emacs.d
+#+BEGIN_SRC sh
+ls ~/.emacs.d
+#+END_SRC
+
+#+RESULTS:
+: auto-save-list
+
+#+BEGIN_SRC sh
+mv prelude/* ~/.emacs.d
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh
+ls ~/.emacs.d/.git
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh
+mv prelude /tmp
+#+END_SRC
+
+#+RESULTS:
+
+**** configaration	
+***** Add Important Modules
+#+NAME: prelude-modules
+#+BEGIN_SRC emacs-lisp
+;;; Uncomment the modules you'd like to use and restart Prelude afterwards
+
+;; Emacs IRC client
+(require 'prelude-erc)
+(require 'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
+(require 'prelude-helm) ;; Interface for narrowing and search
+(require 'prelude-helm-everywhere) ;; Enable Helm everywhere
+(require 'prelude-company)
+(require 'prelude-key-chord) ;; Binds useful features to key combinations
+;; (require 'prelude-mediawiki)
+;; (require 'prelude-evil)
+
+;;; Programming languages support
+(require 'prelude-c)
+(require 'prelude-clojure)
+(require 'prelude-coffee)
+(require 'prelude-common-lisp)
+(require 'prelude-css)
+(require 'prelude-emacs-lisp)
+(require 'prelude-erlang)
+(require 'prelude-elixir)
+(require 'prelude-go)
+(require 'prelude-haskell)
+(require 'prelude-js)
+(require 'prelude-latex)
+(require 'prelude-lisp)
+(require 'prelude-ocaml)
+(require 'prelude-org) ;; Org-mode helps you keep TODO lists, notes and more
+(require 'prelude-perl)
+(require 'prelude-python)
+(require 'prelude-ruby)
+(require 'prelude-scala)
+(require 'prelude-scheme)
+(require 'prelude-shell)
+(require 'prelude-scss)
+(require 'prelude-web) ;; Emacs mode for web templates
+(require 'prelude-xml)
+(require 'prelude-yaml)
+#+END_SRC
+
+#+NAME: prelude-modules_fwrite
+#+BEGIN_SRC python :session :noweb yes :post fwrite("~/.emacs.d/prelude-modules.el",*this*)
+"""
+<<prelude-modules>>
+"""
+#+END_SRC
+
+#+RESULTS: prelude-modules_fwrite
+: nil
+
+#+call: fread("~/.emacs.d/prelude-modules.el")
+
+***** Add devops and orgmode
+
+#+NAME: customprelude
+#+BEGIN_SRC emacs-lisp
+;;; hello
+(setq starter-kit-dir "~/org")
+(org-babel-load-file (expand-file-name "starter-kit.org" starter-kit-dir))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(js2-basic-offset 2))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+#+END_SRC
+
+#+NAME: customprelude_fwrite
+#+BEGIN_SRC python :session :noweb yes :post fwrite("~/.emacs.d/personal/custom.el",*this*)
+"""
+<<customprelude>>
+"""
+#+END_SRC
+
+#+RESULTS: customprelude_fwrite
+: nil
+
+#+call: fread("~/.emacs.d/personal/custom.el")
+
+***** Emacs Setup For Debain
+
+#+NAME: ealias
+#+begin_example
+alias emd='emacs --daemon'
+alias e='emacsclient -t'
+alias ec='emacsclient -c'
+alias vim='emacsclient -t'
+alias vi='emacsclient -t'
+export TERM=xterm-256color
+#+end_example
+
+#+call: fwrite("~/.bashrc",ealias)
+#+call: fread("~/.bashrc")
+
+***** Emacs Setup For Arch Linux
+
+#+NAME: ealias-arch
+#+begin_example
+alias emd='emacs --daemon'
+alias e='emacsclient -t'
+alias ec='emacsclient -c'
+alias vim='emacsclient -t'
+alias vi='emacsclient -t'
+#set -x TERM xterm-256color
+#+end_example
+
+#+call: fwrite("~/.config/fish/config.fish", ealias-arch)
+
+#+call: fread("~/.config/fish/config.fish")
+
+***** Emacs Setup For MAC OSX
+
+#+NAME: ealias-mac-osx
+#+begin_example
+alias emd='emacs --daemon'
+alias e='emacsclient -t'
+alias ec='emacsclient -c'
+alias vim='emacsclient -t'
+alias vi='emacsclient -t'
+#+end_example
+
+#+call: fwrite("~/.bashrc", ealias-mac-osx)
+
+#+RESULTS:
+: nil
+
+#+call: fread("~/.bashrc")
+
+#+RESULTS:
+: alias emd='emacs --daemon'
+: alias e='emacsclient -t'
+: alias ec='emacsclient -c'
+: alias vim='emacsclient -t'
+: alias vi='emacsclient -t'
+
+**** Run Prelude for the First time
+
+
+#+NAME: emacs
+#+BEGIN_SRC sh
+emacs
+#+END_SRC
+
+#+NAME: emacs_aync
+#+BEGIN_SRC python :session :noweb yes :post cmdaync(*this*)
+"""<<emacs>>"""
+#+END_SRC
+
+#+RESULTS: emacs_aync
+: command  is sended to /tmp/org

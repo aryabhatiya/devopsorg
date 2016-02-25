@@ -1,0 +1,74 @@
+** Namepipe Server for receaving command
+#+BEGIN_SRC sh :mkdirp yes :tangle bin/pipeserver :shebang #!/bin/bash :eval never  :noweb yes
+    <<init_pipeserver>>
+    <<init_pipe>>
+    echo $param
+    while true
+    do
+        if read line <$pipe; then
+            <<check_quit>>
+            echo $param$line
+            eval $line
+            echo $param$line
+        fi
+    done
+#+END_SRC
+
+*** Place the file in bin/pipeserver
+#+BEGIN_SRC elisp
+(org-babel-tangle)
+#+END_SRC
+
+#+RESULTS:
+| bin/pipeserver |
+
+*** Execute *pipeserver*
+#+BEGIN_SRC sh :var path=pwd() :dir /sudo:root@localhost:/usr/local/bin
+ls -l $path/bin/pipeserver
+cp $path/bin/pipeserver /usr/local/bin/
+ls -l /usr/local/bin/pipeserver
+#+END_SRC
+
+#+RESULTS:
+| -rwxr-xr-x | 1 | mrfrp | staff | 380 | Feb | 18 | 00:55 | /Users/mrfrp/org/bin/pipeserver |
+| -rwxr-xr-x | 1 | root  | admin | 380 | Feb | 18 | 00:57 | /usr/local/bin/pipeserver       |
+
+*** Init Pipeserver Parameters
+#+NAME: init_pipeserver
+#+BEGIN_SRC sh
+  current_dir=${PWD##*/}
+  pipe="/tmp/$current_dir"
+  param="["$USER"@"`hostname`":"`pwd`"]# "
+#+END_SRC
+
+#+RESULTS:
+: [root@asik-105:/usr/local/src/pipeserver]#
+**** Test Pipeserver Params
+#+BEGIN_SRC sh :noweb yes
+<<init_pipeserver>>
+cmd="ls -l"
+echo $param$cmd
+echo $current_dir
+echo $pipe
+#+END_SRC
+
+#+RESULTS:
+| [root@asik-105:/usr/local/src/pipeserver]# | ls | -l |
+| pipeserver                                 |    |    |
+| /tmp/pipeserver                            |    |    |
+*** Init pipe
+#+NAME: init_pipe
+#+BEGIN_SRC sh
+   trap "rm -f $pipe" EXIT
+
+   if [[ ! -p $pipe ]]; then
+       mkfifo $pipe
+   fi
+#+END_SRC
+*** Close pipeserver
+#+NAME: check_quit
+#+BEGIN_SRC sh
+  if [[ "$line" == 'quit' ]]; then
+      break
+  fi
+#+END_SRC

@@ -1,0 +1,375 @@
+* Installing and starting Xmonad
+** Installation
+This guide will work for every distro, but because I'm using Arch Linux, I will use Arch commands to install xmonad. The packages I'm using are xmonad, xmonad-contrib,
+xmobar and trayer.
+
+To install them in Arch Linux, run this command:
+
+#+NAME: xmonad_install
+#+BEGIN_SRC sh
+ pacman -S xmonad xmonad-contrib xmobar trayer
+#+END_SRC
+
+
+** start xmonad automatically
+To start xmonad automatically, simply add the command exec xmonad to your startup script ( ~/.xinitrc). To set a cursor for the xmonad desktop, add the following
+command
+
+#+NAME: xinitrc
+#+BEGIN_SRC
+exec xmonad
+xsetroot -cursor_name left_ptr
+#+END_SRC
+
+
+
+#+call: pwd()
+
+If you are using a keyboard that doesnt have the default us layout, you also need to make xmonad recognize the keyboard. To do so, for example, with my French layout
+keyboard, I add this command:
+setxkbmap -layout fr
+My initial ~/.xinitrc file therefore looks like this
+ # set cursor
+ xsetroot -cursor_name left_ptr
+ # French keyboard layout
+ setxkbmap -layout fr
+ # start xmonad
+ exec ck-launch-session xmonad
+After editing the startup script, you should check if you already have a ~/.xmonad folder. If you dont, just create it:
+mkdir ~/.xmonad
+Next, you need to create a config file for xmonad ( the xmonad.hs file). I will show you how to do so from scratch in the next parts of this guide but the easiest way
+is to copy the sample xmonad.hs to your ~/.xmonad folder. The sample xmonad.hs is located in /usr/share/your-xmonad-version/man/. For example, my xmonad version is
+xmonad-0.9.2 so my sample xmonad.hs will be /usr/share/xmonad-0.9.2/man/xmonad.hs. You can either use a text editor to copy-paste the file to your ~/.xmonad/xmonad.hs
+file or run this command:
+sudo cp /usr/share/xmonad-0.9.2/xmonad.hs ~/.xmonad/xmonad.hs
+After that you can log out and log in again to use xmonad. You will see nothing but a blank screen at first but dont be panic, just hit Alt+p (Alt is the default
+modkey) to open the dmenu launcher and you can run applications from it. To know the default keybindings of xmonad, you can read about them in the sample xmonad.hs in
+/usr/share/xmonad/man/xmonad.hs.
+
+You can actually use xmonad trouble-free with the default settings but if you want to customize your own xmonad.hs file, the following parts of this guide will show
+you how.
+
+* The basic configurations
+
+A working xmonad.hs could be very simple like this:
+import XMonad
+main = do
+       xmonad $ defaultConfig
+If you want to incorperate xmonad with other desktop enviroment (DE) like Gnome or KDE (in other words you’ll still be running your DE but the window manager is
+replaced with XMonad) you have to import the modules for each DE. For example, if you want to use xmonad with Gnome, the xmonad.hs file will look like this:
+import XMonad
+import XMonad.Config.Gnome
+main = do
+       xmonad $ gnomeConfig
+If you are using a french layout keyboard, you will have trouble with the workspaces in xmonad (if you have used awesome - another tiling window manager- you wont face
+this problem since awesome automatically recognizes the keyboard layout). To fix that problem, you need to import the XMonad.Config.Azerty, my xmonad.hs for a french
+layout will look like this:
+import XMonad
+import XMonad.Config.Azerty
+main = do
+       xmonad $ azertyConfig
+To change the modkey (the default is the Alt key) to the window key, you add the line "modMask = mod4Mask". The xmonad.hs will be like this
+import XMonad
+
+main = do
+       xmonad $ defaultConfig
+       {modMask = mod4Mask
+       }
+After saving the file, you can save the file, hit Alt+ q to recomplie and restart xmonad to change the settings. However, I recommend you to use the terminal to run
+"xmonad --recompile" then "xmonad --restart" to see if you got any error in the xmonad.hs.
+
+That's the basic things you need to create a xmonad.hs file. With this minimal file, you still can use all the default settings of xmonads. The following part is about
+how to change the workspaces settings and customize the layout for eyecandy purpose.
+
+* Setting the layout and workspaces
+
+To change the color and width of the border, you can do like this:
+ import XMonad
+
+ main = do
+      xmonad $ defaultConfig
+      {borderWidth = 2
+      ,normalBorderColor = "#abc123"
+      ,focusedBorderColor = "#456def"
+      }
+The default layout of xmonad is defined in the following lines:
+ myLayout = tiled ||| Mirror tiled ||| Full
+ where
+      -- default tiling algorithm partitions the screen into two panes
+      tiled = Tall nmaster delta ratio
+
+      -- The default number of windows in the master pane
+      nmaster = 1
+
+      -- Default proportion of screen occupied by master pane
+      ratio = 1/2
+
+      -- Percent of screen to increment by when resizing panes
+      delta = 3/100
+To change the default layout, edit these lines then add them to the xmonad.hs file like this:
+ import XMonad
+
+ myLayout = tiled ||| Mirror tiled ||| Full
+ where
+      -- default tiling algorithm partitions the screen into two panes
+      tiled = Tall nmaster delta ratio
+
+      -- The default number of windows in the master pane
+      nmaster = 1
+
+      -- Default proportion of screen occupied by master pane
+      ratio = 2/3
+
+      -- Percent of screen to increment by when resizing panes
+      delta = 5/100
+
+ main = do
+      xmonad $ defaultConfig
+      {layoutHook = myLayout
+      }
+To add some space between windows, you need to import the XMonad.Layout.Spacing module and edit your layout settings. For example, to have a space of 5 pixels between
+windows, my xmonad.hs will look like that:
+ import XMonad
+ import XMonad.Layout.Spacing
+
+ myLayout = tiled ||| Mirror tiled ||| Full
+ where
+      -- default tiling algorithm partitions the screen into two panes
+      tiled = spacing 5 $ Tall nmaster delta ratio
+
+      -- The default number of windows in the master pane
+      nmaster = 1
+
+      -- Default proportion of screen occupied by master pane
+      ratio = 2/3
+
+      -- Percent of screen to increment by when resizing panes
+      delta = 5/100
+
+ main = do
+ xmonad $ defaultConfig
+      {layoutHook = myLayout
+      }
+To define the names and the amount of your workspaces (they will appear on the statusbar later on), you can do like this
+ import XMonad
+
+ -- Define amount and names of workspaces
+ myWorkspaces = ["1:main","2:chat","3","whatever","5:media","6","7","8:web"]
+
+ main = do
+      xmonad $ defaultConfig
+      {workspaces = myWorkspaces
+      }
+You may also dont want to display the border of windows on some workspaces, to do so you need to import the XMonad.Layout.NoBorders and XMonad.Layout.PerWorkspace
+modules then change the layout settings like this:
+ import XMonad
+ import XMonad.Layout.NoBorders
+ import XMonad.Layout.PerWorkspace
+
+ defaultLayouts = tiled ||| Mirror tiled ||| Full
+ where
+      -- default tiling algorithm partitions the screen into two panes
+      tiled = Tall nmaster delta ratio
+
+      -- The default number of windows in the master pane
+      nmaster = 1
+
+      -- Default proportion of screen occupied by master pane
+      ratio = 2/3
+
+      -- Percent of screen to increment by when resizing panes
+      delta = 3/100
+
+ -- Define layout for specific workspaces
+ nobordersLayout = noBorders $ Full
+
+ -- Put all layouts together
+ myLayout = onWorkspace "2:chat" nobordersLayout $ defaultLayouts
+
+ myWorkspaces = ["1:main","2:chat","3","4","5:media","6","7","8:web"]
+
+ main = do
+      xmonad $ defaultConfig
+      {workspaces = myWorkspaces
+      , lauoutHook = myLayout
+      }
+After defining the workspaces, you also want to attach some applications for specific workspaces. That means when you open an app, xmonad will automatically move it to
+a defined workspace. You can do like this:
+ import XMonad
+
+ myWorkspaces = ["1:main","2:chat","3","whatever","5:media","6","7","8:web"]
+ myManageHook = composeAll
+      [ className =? "Iron" --> doShift "8:web"
+      , className =? "Xchat" --> doShift "2:chat"
+      ]
+
+ main = do
+      xmonad $ defaultConfig
+      { workspaces = myWorkspaces
+      , manageHook = myManageHook <+> manageHook defaultConfig
+      }
+If you dont want xmonad to tile some applications, you can do add the following lines to the myManageHook like this:
+ myManageHook = composeAll
+      [ className =? "Gimp" --> doFloat
+      , className =? "Gnome-player" --> doFloat
+      ]
+Note: to know the className of an app, you can run the command "xprop" on the terminal, the cursor will change to the crosshair shape then use this crosshair to click
+on the app. The className of this app will appear on the terminal afterward.
+
+* Keybindings in Xmonad
+
+Because with a tiling window manager, you have to use the keyboard a lot so the next important thing you need to know is about the keybindings. You can find the
+default keybindings in the /usr/share/xmonad/man/xmonad.hs file. However, you may find these key combinations not very intuitive and redundant at times, that's why you
+need to set your own keybindings and remove the unnecessary keys.
+
+4.a - Adding and removing key combinations
+
+As far as I know, there are two ways to add new keys and remove unused keys in xmonad.
+
+The first way is to use the XMonad.Util.EZConfig module. The format to define a key combination is:
+
+    ((modkey, key), action)
+
+Here is an example of xmonad.hs with some new keycombinations:
+ import XMonad
+ import XMonad.Util.EZConfig
+
+ main = do
+      xmonad $ defaultConfig
+      {modMask = mod4Mask -- use the window key as the modkey
+      }`additionalKeys`
+      [(( mod4Mask, xK_f), spawn "firefox") -- to open firefox
+      ,(( mod4Mask .|. shiftMask, xK_F4), spawn "sudo shutdown -h now") -- window key + Shift + F4 to shutdown system
+      , (( mod4Mask, xK_F4), kill) -- to kill applications
+      ,(( controlMask, xK_KP_Add), sendMessage Expand) -- Ctrl + the plus (+) button to expand the master pane
+      , ((0, xK_Print), spawn "scrot") -- use the print key to capture screenshot with scrot
+      ,((mod4Mask, xk_y), spawn "home/user/scripts/somescript.sh" ) -- use mod4Mask + y to run a script
+      ]
+To remove existing key combinations with the EZConfig module, you just need to return the action of the keybindings to null. For example,if you already use mod4Mask+F4
+to kill apps, you dont need the modMask+Shift+C anymore. To remove this keybinding, you add the following line to the additionalKeys array:
+ ((mod4Mask .|. shiftMask , xK_c), return ()) -- return() means to do nothing
+The other way to add and remove key combinations is to define your own keys. To do so you need to include the module Data.Map. Here is an example of xmonad.hs using
+this method to add and remove keybindings:
+ import XMonad
+ import qualified Data.Map as M
+
+ keysToAdd x = [((mod4Mask, xK_F4), kill)]
+
+ keysToDel x = [((mod4Mask .|. shiftMask), xK_c)]
+
+ newKeys x = M.union (keys defaultConfig x) (M.fromList (keysToAdd x)) -- to include new keys to existing keys
+
+ myKeys x = foldr M.delete (newKeys x) (keysToDel x) -- to delete the unused keys
+
+ main = do
+ xmonad $ defaultConfig
+      { modMask = mod4Mask
+      , keys = myKeys
+      }
+Both methods work well so it's up to you to choose your style.
+
+Note:
+
+It seems the default dmenu doenst have the command prompt anymore. To fix that and get some embellishments for the dmenu, you need to define a keybinding like this:
+(to know more options for dmenu, please run "man dmenu" in the terminal)
+ ((mod4Mask, xK_p), spawn "exe=`dmenu_run -b -nb black -nf yellow -sf yellow` && eval \"exec $exe\"")
+You also need to include additional modules to execute some actions. For example, you have to import the module "qualified XMonad.StackSet as W" to define a new key
+combination to swap up and down the focused windows with the following keybindings:
+
+ ((mod4Mask , xK_Up), W.swapUp)
+
+4.b - Including laptop function keys into keybindings
+
+To find the names of every keyboard button you can use the program "xev". This is also helpful if you want to include the laptop function keys to your keybindings.
+
+First, you need to install the package xorg-xev, if you're using Arch Linux, just run:
+ sudo pacman -S xorg-xev
+Next, open the terminal and run the following command:
+ xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
+A white window with a black square inside will appear. To find the name of a key, just move the cursor to the white window then hit the key, you will have the output
+of the names of the keys you just hit. An output example will be like this:
+
+    10 ampersand
+    24 a
+    127 Pause
+    133 Super_L
+    133 Super_L
+    213 XF86Suspend
+    233 XF86MonBrightnessUp
+    86 KP_Add
+    82 KP_Subtract
+    111 Up
+    84 KP_Begin
+    85 KP_Right
+    77 Num_Lock
+    89 KP_3
+
+As you can see in the example above, I hit two of my laptop fucntion keys ( the suspend and increase brightness buttons). The names of these keys are XF86Suspend and
+XF86MonBrightnessUp. To include these buttons into your keybindings, you need to import the Graphics.X11.ExtraTypes.XF86 module. For example, in the xmonad.hs below, I
+use the MonBrightnessUp button to increase the brightness of the laptop screen:
+ import XMonad
+ import Graphics.X11.ExtraTypes.XF86
+ import XMonad.Util.EZConfig
+
+ main = do
+      { modMask = mod4Mask
+      }`additionalKeys`
+      [((mod4Mask, xF86XK_MonBrightnessUp), spawn "xbacklight +20")
+      ]
+
+* Creating a status bar with xmobar and trayer
+
+Unlike awesome, xmonad doesnt come with status bar by default. To have a status bar in xmonad, the most popular choices are dzen2 and xmobar. I myself use xmobar and
+trayer as the status bar with a notification area and here I will show you how to set up and configure xmobar and trayer.
+
+To install xmobar and trayer in Arch Linux, run
+ sudo pacman -S xmobar trayer
+You can run xmobar from the startup script (~/.xinitrc) as well but I prefer launching xmobar from xmonad itself. A sample of xmonad.hs that uses xmobar will be like
+this:
+ import XMonad
+ import XMonad.Hooks.DynamicLog
+ import XMonad.Hooks.ManageDocks
+ import XMonad.Util.Run
+ import System.IO
+
+ main = do
+ xmproc <- spawnPipe "/usr/bin/xmobar /path/to/your/config-file"
+ xmonad $ defaultConfig
+      { manageHook = manageDocks <+> manageHook defaultConfig
+      , layoutHook = avoidStruts $ layoutHook defaultConfig
+      , logHook = dynamicLogWithPP xmobarPP
+           { ppOutput = hPutStrLn xmproc
+           , ppTitle = xmobarColor "blue" "" . shorten 50
+           , ppLayout = const "" -- to disable the layout info on xmobar
+           }
+      }
+In the example above, to run xmobar with xmonad, you need to import some modules, DynamicLog and System.IO are to output status information to xmobar, ManageDocks is
+to make xmonad spare a space for the status bar and XMonad.Util.Run is for the spawnPipe command to launch xmobar. The line right after the main = do is to launch
+xmobar with the xmobarrc config file ( I will show you how to create one in the next part). I choose blue as the color of the info on xmobar and the info will be
+shortened to 50 characters. I also add the line ppLayout = const"" to disable the layout info.
+
+The next thing you need to know is how to create a xmobarrc file. The Arch Wiki has a very nice and concise article about xmobar so I wont cover much about it. Here is
+my xmobar config file
+ Config { font = "xft:Bitstream Vera Sans Mono:size=9:bold:antialias=true"
+     , bgColor = "#000000"
+     , fgColor = "grey"
+     , position = Static { xpos = 0 , ypos = 0, width = 1290, height = 16 }
+     , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+             , Run Network "eth0" ["-L","0","-H","70","--normal","green","--high","red"] 10
+             , Run Memory ["-t","Mem: <usedratio>%"] 10
+             , Run Com "/home/lulz/scripts/cputemp.sh" [] "cpuTemp" 10
+           , Run Date "%a %b %_d %l:%M" "date" 10
+             , Run Com "/home/lulz/scripts/volume.sh" [] "volume" 10
+           , Run StdinReader
+           ]
+     , sepChar = "%"
+     , alignSep = "}{"
+     , template = " %StdinReader%}{ <fc=grey>%cpu% </fc> <fc=red>%cpuTemp%</fc>°C<fc=grey> ~ %memory% ~ %eth0%</fc> ~ <fc=#ee9a00>%date%</fc> ~ Vol: <fc=green>%volume%</fc> "
+     }
+
+Note: Due to some unknown bugs, I couldn't get the default cputemp and volume of xmobar to work so I had to use my own scripts to display these info. Here are my
+scripts to display cpu temperature and volume.
+
+Setting the trayer is easy. You just need to copy paste this line into the startup script (~/.xinitrc) and put it on the part to launch xmonad. The settings are pretty
+self-explained:
+ trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 6 --transparent true --alpha 0 --tint 0x000000 --height 16 &

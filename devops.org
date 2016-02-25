@@ -1,0 +1,262 @@
+* File directory handleing
+** pwd
+#+NAME: pwd
+#+BEGIN_SRC elisp :var file=""
+(expand-file-name file)
+#+END_SRC
+** module
+#+NAME: module
+#+BEGIN_SRC elisp  :export none
+  (last
+   (split-string
+    (replace-regexp-in-string "/" " "   (expand-file-name "")) ))
+#+END_SRC
+
+** Keyboard Macro for diff
+#+BEGIN_EXAMPLE
+;; Original keys: e D NUL ESC > ESC w C-x C-o C-x o C-x o C-x C-o C-x o q y
+
+Command: last-kbd-macro
+Key: none
+
+Macro:
+
+e			;; self-insert-command
+D			;; self-insert-command
+NUL			;; set-mark-command
+ESC >			;; end-of-buffer
+ESC w			;; kill-ring-save
+C-x C-o			;; delete-blank-lines
+C-x o			;; other-window
+C-x o			;; other-window
+C-x C-o			;; delete-blank-lines
+C-x o			;; other-window
+q			;; self-insert-command
+y			;; self-insert-command
+
+#+END_EXAMPLE
+#+BEGIN_SRC elisp
+(fset 'ashdiff
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("eD>woooqy" 0 "%d")) arg)))
+#+END_SRC
+** Send data to PIPE
+   CLOCK: [2016-01-13 Wed 05:47]--[2016-01-13 Wed 05:58] =>  0:11
+   :PROPERTIES:
+   :Effort:   0:10
+   :END:
+#+NAME: cmdaync
+#+BEGIN_SRC sh :var cmd="" :var mod=module[0] :noweb yes
+  <<check_pipeserver_running>>
+  echo  $cmd   > $pipe
+#+END_SRC
+
+#+RESULTS:
+: command npm adduser is sended to /tmp/friends-aneesha
+
+*** check_pipeserver_running
+#+NAME: check_pipeserver_running
+#+BEGIN_SRC sh
+  pipe="/tmp/"$mod
+  [ ! -p $pipe ] && exit 1 || echo "command $DT is sended to $pipe"
+#+END_SRC
+
+#+RESULTS: check_pipeserver_running
+: command  is sended to /tmp/friends-aneesha
+
+* file contents
+** Write string
+#+NAME: fwrite
+#+BEGIN_SRC elisp :var filename=""  :var s=""
+    (with-temp-buffer
+      (insert s)
+      (when (file-writable-p filename)
+         (write-region (point-min) (point-max) filename nil))))
+#+END_SRC
+** Output file to string
+#+name: fread
+#+BEGIN_SRC elisp :var filename=""
+    (with-temp-buffer
+      (insert-file-contents filename)
+      (buffer-string))
+#+END_SRC
+
+#+RESULTS:
+: # friends-aneesha
+
+** bash quote
+#+NAME: beginsh
+#+BEGIN_SRC sh  :noweb yes :results verbatim
+echo $(cat << 'BBL_START'
+#+END_SRC
+
+#+NAME: endsh
+#+BEGIN_SRC sh
+BBL_START
+)
+#+END_SRC
+
+** temp buffer
+#+name: tmpbuf
+#+BEGIN_SRC elisp :var buf="" :var name="*tmp*"
+(progn
+(switch-to-buffer-other-window name)
+(erase-buffer)
+(insert buf)
+(other-window 1))
+#+END_SRC
+
+#+RESULTS: tmpbuf
+
+** file search replace
+#+NAME: filesearchreplace
+#+BEGIN_SRC elisp :var filename="" :var sstr="" :var rstr=""
+  (with-temp-buffer
+    (insert-file-contents filename)
+    (goto-char (point-min))
+    (while (search-forward sstr nil t)
+      (replace-match rstr))
+    (when (file-writable-p filename)
+      (write-region (point-min) (point-max) filename nil))
+      (buffer-string))
+#+END_SRC
+** Add code to File
+#+NAME: addcodetofile
+#+BEGIN_SRC elisp :var buffer=""  :var filename=""
+  (with-temp-buffer
+;;  (insert-file-contents filename)
+  (insert buffer)
+  (when (file-writable-p filename)
+    (write-region (point-min) (point-max) filename nil))
+  (buffer-string))
+#+END_SRC
+
+* Setup.org
+** Pandoc org to markdown_github
+#+NAME: readme
+#+BEGIN_SRC sh :var src="setup.org" :var dst="README.md" :noweb yes :post fwrite(bagesbuf())
+/root/.cabal/bin/pandoc --from org --to markdown_github -o $dst $src
+#+END_SRC
+** run git macro
+#+BEGIN_SRC elisp
+(fset 'npmcommit
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("eDhwoooqyo<s		<e	OAOAOAo" 0 "%d")) arg)))
+#+END_SRC
+#+BEGIN_EXAMPLE
+;; Original keys: # + c a 2*l : SPC c m d a y n c ( " n p m SPC r u n SPC c o 2*m i t " ) C-a C-c C-c
+
+Command: last-kbd-macro
+Key: none
+
+Macro:
+
+#			;; self-insert-command
++			;; self-insert-command
+c			;; self-insert-command
+a			;; self-insert-command
+2*l			;; self-insert-command
+:			;; self-insert-command
+SPC			;; self-insert-command
+c			;; self-insert-command
+m			;; self-insert-command
+d			;; self-insert-command
+a			;; self-insert-command
+y			;; self-insert-command
+n			;; self-insert-command
+c			;; self-insert-command
+(			;; self-insert-command
+"			;; self-insert-command
+n			;; self-insert-command
+p			;; self-insert-command
+m			;; self-insert-command
+SPC			;; self-insert-command
+r			;; self-insert-command
+u			;; self-insert-command
+n			;; self-insert-command
+SPC			;; self-insert-command
+c			;; self-insert-command
+o			;; self-insert-command
+2*m			;; self-insert-command
+i			;; self-insert-command
+t			;; self-insert-command
+"			;; self-insert-command
+)			;; self-insert-command
+C-a			;; org-beginning-of-line
+C-c C-c			;; org-ctrl-c-ctrl-c
+
+#+END_EXAMPLE
+
+** bages
+*** Contnts
+#+NAME: bages
+#+BEGIN_SRC  python
+[![travis build](https://img.shields.io/travis/chowdhuryashraf/friends-aneesha.svg)](https://travis-ci.org/chowdhuryashraf/friends-aneesha)
+[![codecov coverage](https://img.shields.io/codecov/c/github/chowdhuryashraf/friends-aneesha.svg)](https://codecov.io/github/chowdhuryashraf/friends-aneesha)
+[![version](https://img.shields.io/npm/v/friends-aneesha.svg)](https://www.npmjs.com/package/friends-aneesha)
+[![downloads](https://img.shields.io/npm/dm/friends-aneesha.svg)](https://www.npmjs.com/package/friends-aneesha)
+[![MIT License](https://img.shields.io/npm/l/friends-aneesha.svg)](https://www.npmjs.com/package/friends-aneesha)
+#+END_SRC
+
+*** Add Contents
+#+name: bagesbuf
+#+BEGIN_SRC elisp :var buf=write_bages() :var mod=module[0] :var end=fread("README.md")
+(concat  buf  "\n" mod "\n" "===============" "\n" end)
+#+END_SRC
+
+#+RESULTS: bagesbuf
+
+#+NAME: write_bages
+#+BEGIN_SRC sh :noweb yes
+write_bages= <<beginsh>>
+<<bages>>
+<<endsh>>
+#+END_SRC
+
+#+RESULTS: write_bages
+* Send data to PIPE
+   CLOCK: [2016-01-13 Wed 05:47]--[2016-01-13 Wed 05:58] =>  0:11
+   :PROPERTIES:
+   :Effort:   0:10
+   :END:
+#+NAME: cmdaync
+#+BEGIN_SRC sh :var cmd="" :var mod=module[0] :noweb yes
+<<check_pipeserver_running>>
+echo  $cmd   > $pipe
+#+END_SRC
+
+#+RESULTS:
+: command npm adduser is sended to /tmp/friends-aneesha
+
+*** check_pipeserver_running
+#+NAME: check_pipeserver_running
+#+BEGIN_SRC sh
+pipe="/tmp/"$mod
+[ ! -p $pipe ] && exit 1 || echo "command $DT is sended to $pipe"
+#+END_SRC
+
+#+RESULTS: check_pipeserver_running
+: command  is sended to /tmp/friends-aneesha
+* Linux
+#+NAME: useradd
+#+BEGIN_SRC sh :var username=""
+ useradd --shell /usr/bin/fish -g users --create-home -m -G wheel $username
+#+END_SRC
+* babel
+** Wrap
+#+NAME: wrap
+#+BEGIN_SRC js :var snippet="" :var process="txt" :var file="" :var post=""  :results raw
+  var gen_post = function () {
+      if (process === "aync") {
+          return ":post " + "cmdaync" +  "(" + "*this*" + ")";
+      }
+      if (process === "fwrite"){
+          return ":post " + "fwrite" + "(" + '"' +  file + '"' + "," + "*this*" + ")";
+      }
+      return post;
+  };
+  var code = "#+NAME: " + snippet + "_" + process + "\n";
+  code = code + "#+BEGIN_SRC python :session :noweb yes "  + gen_post() + "\n";
+  code = code + '"""' + "\n" + '<<' + snippet + '>>' + "\n" + '"""' + "\n";
+  code = code + "#+END_SRC";
+  console.log(code);
+  return 0;
+#+END_SRC
