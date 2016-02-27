@@ -310,32 +310,7 @@ https://wiki.archlinux.org/index.php/Huawei_E1550_3G_modem#USSD_Requests
 ** xclip [[http://unix.stackexchange.com/questions/16694/copy-input-to-clipboard-over-ssh][unix stackexchage]]
 ** [[http://blog.binchen.org/?p=589][gist]]
 ** [[http://stackoverflow.com/questions/1152362/getting-items-on-the-local-clipboard-from-a-remote-ssh-session][pbcopy /pdppaste]]
-* Installation
-*** DONE [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.5 install ubuntu]]
-*** [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.4 install ubuntu]]
-*** Build prerecusites						       :SUDO:
-#+BEGIN_SRC sh :dir /sudo:: :results value raw
-sudo apt-get install build-essential
-sudo apt-get build-dep emacs24
-sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
-#+END_SRC
 
-#+RESULTS:
-
-*** Download 24.5 prepare installations
-#+BEGIN_SRC sh :dir
-wget http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz
-xz -d emacs-24.5.tar.xz
-mkdir emacs24.4installation
-cd emacs24.4installation
-mv ../emacs-24.5.tar .
-tar -xvf emacs-24.5.tar
-cd emacs-24.5
-./configure
-ps afx
-#+END_SRC
-
-*** aspell
 * DONE SSH and Trump
   CLOCK: [2016-01-07 বৃহঃ 01:12]--[2016-01-07 বৃহঃ 03:12] =>  2:00
   CLOCK: [2016-01-07 বৃহঃ 01:03]--[2016-01-07 বৃহঃ 01:04] =>  0:01

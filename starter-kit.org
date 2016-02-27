@@ -54,7 +54,7 @@ much more like reading and editing of code using its major mode.
    :CUSTOM_ID: code-block-org-devops
    :END:
 
-#+BEGIN_SRC emacs-lisp 
+#+BEGIN_SRC emacs-lisp
   (org-babel-lob-ingest (expand-file-name "~/org/devops.org"))
   (defun devops()
       (interactive)
@@ -63,7 +63,7 @@ much more like reading and editing of code using its major mode.
 
 #+RESULTS:
 : 19
-   
+
 ** Org-Mode Hook -- Keybindings
    :PROPERTIES:
    :CUSTOM_ID: keybindings
@@ -177,23 +177,40 @@ file using the `org-babel-lob-ingest' function.
    :PROPERTIES:
    :CUSTOM_ID: installation
    :END:
-*** Introduction
-**** TODO Install Emacs version 24 or greater. 
-***** TODO Installation In Linux Desktop
-****** TODO Arch Linux 
-****** TODO Debain / Ubuntu 
-***** TODO Installation In Linux Server 
-***** TODO Installation in Max OSX
-*** [[~/org][org directory]] backup
-#+BEGIN_SRC sh
-mv ~/org ~/backups
-ls ~
+** TODO Install Emacs version 24 or greater
+*** Build [[~/org/pipeserver.org][ PipeServer ]]
+*** TODO Installation In Linux Desktop
+**** TODO Arch Linux
+**** TODO Debain / Ubuntu
+****** DONE [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.5 install ubuntu]]
+****** [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.4 install ubuntu]]
+****** Build prerecusites
+#+BEGIN_SRC sh :dir /sudo:: :results value raw
+sudo apt-get install build-essential
+sudo apt-get build-dep emacs24
+sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
 #+END_SRC
 
 #+RESULTS:
-: abc.wav
 
-*** Tangle Code Block
+****** Download 24.5 prepare installations
+#+BEGIN_SRC sh :dir
+wget http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz
+xz -d emacs-24.5.tar.xz
+mkdir emacs24.4installation
+cd emacs24.4installation
+mv ../emacs-24.5.tar .
+tar -xvf emacs-24.5.tar
+cd emacs-24.5
+./configure
+ps afx
+#+END_SRC
+
+****** aspell
+*** TODO Installation In Linux Server
+*** TODO Installation in Max OSX
+** [[~/org][org directory]] backup
+*** Make emacs Script
 #+NAME: initemacs
 #+begin_src sh :noweb yes
   emacs -q -l <<pwd()>>/init.el --eval "(run-hooks 'after-init-hook)" $1
@@ -214,7 +231,7 @@ ls ~
 #+call: fread("em.sh")
 
 #+RESULTS:
-: 
+:
 : emacs -q -l /Users/mrfrp/org/init.el --eval "(run-hooks 'after-init-hook)" $1
 
 *** Minimal Emacs Configuretion
@@ -240,10 +257,9 @@ ls -la /bin/em
 | -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                                         |
 
 *** Close emacs , Restart emacs using "em" command
-*** Build [[~/org/pipeserver.org][ PipeServer ]]
 *** Run "pipeserver" in command line
 *** Configure Prelude
-**** clone  backup previous	
+**** clone  backup previous
 ***** Backup
 #+BEGIN_SRC sh :dir ~
 mv .emacs.d backup
@@ -252,11 +268,11 @@ mv .emacs.d backup
 #+RESULTS:
 ***** Clone
 #+NAME: prelude_git
-#+BEGIN_SRC sh 
+#+BEGIN_SRC sh
 git clone git://github.com/bbatsov/prelude.git prelude
 #+END_SRC
 
-***** Run Aync  
+***** Run Aync
 #+NAME: prelude_git_aync
 #+BEGIN_SRC python :session :noweb yes :post cmdaync(*this*)
 """<<prelude_git>>"""
@@ -294,7 +310,7 @@ mv prelude /tmp
 
 #+RESULTS:
 
-**** configaration	
+**** configaration
 ***** Add Important Modules
 #+NAME: prelude-modules
 #+BEGIN_SRC emacs-lisp
