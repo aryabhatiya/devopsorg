@@ -49,7 +49,7 @@ much more like reading and editing of code using its major mode.
 #+RESULTS:
 : t
 
-** Load Babel Libraries 					     :DEVOPS:
+** Load Babel Libraries
    :PROPERTIES:
    :CUSTOM_ID: code-block-org-devops
    :END:
@@ -177,39 +177,84 @@ file using the `org-babel-lob-ingest' function.
    :PROPERTIES:
    :CUSTOM_ID: installation
    :END:
-** TODO Install Emacs version 24 or greater
+** Install Emacs version 24 or greater
 *** Build [[~/org/pipeserver.org][ PipeServer ]]
-*** TODO Installation In Linux Desktop
-**** TODO Arch Linux
-**** TODO Debain / Ubuntu
-****** DONE [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.5 install ubuntu]]
+*** Installation In Linux
+**** Arch Linux
+#+BEGIN_SRC sh
+ pacman -S sudo
+#+END_SRC
+
+**** Debain / Ubuntu
 ****** [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.4 install ubuntu]]
 ****** Build prerecusites
-#+BEGIN_SRC sh :dir /sudo:: :results value raw
-sudo apt-get install build-essential
-sudo apt-get build-dep emacs24
+#+NAME: emacsdep
+#+BEGIN_EXAMPLE
 sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
-#+END_SRC
+#+END_EXAMPLE
 
-#+RESULTS:
+#+call: cmdaync(emacsdep)
+
+#+RESULTS: cmdaync(emacsdep)
+: command  is sended to /tmp/org
 
 ****** Download 24.5 prepare installations
-#+BEGIN_SRC sh :dir
-wget http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz
-xz -d emacs-24.5.tar.xz
-mkdir emacs24.4installation
-cd emacs24.4installation
-mv ../emacs-24.5.tar .
-tar -xvf emacs-24.5.tar
-cd emacs-24.5
+#+NAME: em25
+#+BEGIN_EXAMPLE
+cd .. ;
+wget http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz  ;
+xz -d emacs-24.5.tar.xz ;
+tar -xvf emacs-24.5.tar ;
+#+END_EXAMPLE
+
+#+call: cmdaync(em25)
+
+#+NAME: em25conf
+#+BEGIN_EXAMPLE
+cd emacs-24.5  ;
 ./configure
-ps afx
+#+END_EXAMPLE
+
+#+call: cmdaync(em25conf)
+
+#+NAME: em25install
+#+BEGIN_EXAMPLE
+make ; sudo make install
+#+END_EXAMPLE
+
+#+call: cmdaync(em25install)
+
+#+RESULTS: cmdaync(em25install)
+: command  is sended to /tmp/org
+#+NAME: embin
+#+BEGIN_SRC sh :dir /sudo:root@localhost:/usr/local/bin
+mv /usr/local/bin/emacs /usr/local/bin/emacs.old
+ln -s `which emacs-24.5` /usr/local/bin/emacs
 #+END_SRC
 
+#+RESULTS: embin
+
 ****** aspell
-*** TODO Installation In Linux Server
-*** TODO Installation in Max OSX
-** [[~/org][org directory]] backup
+#+NAME: aspellinstall
+#+BEGIN_EXAMPLE
+sudo apt-get install aspell
+#+END_EXAMPLE
+
+#+call: cmdaync(aspellinstall)
+
+#+RESULTS: cmdaync(aspellinstall)
+: command  is sended to /tmp/org
+
+#+call: cmdaync("cd ../org ; pwd ")
+
+#+RESULTS: cmdaync("cd ../org ; pwd ")
+: command  is sended to /tmp/org
+
+*** Installation in Max OSX
+#+BEGIN_EXAMPLE
+brew install emacs
+#+END_EXAMPLE
+** Configaration
 *** Make emacs Script
 #+NAME: initemacs
 #+begin_src sh :noweb yes
@@ -219,20 +264,19 @@ ps afx
 #+call: wrap("initemacs") :results raw
 
 #+NAME: initemacs_tofile
-#+BEGIN_SRC python :session :noweb yes :post fwrite("em.sh",*this*)
-"""
-<<initemacs>>
-"""
+#+BEGIN_SRC python :session :noweb yes :var filename="em.sh"
+code =  """<<initemacs>>"""
+open(filename, 'w').write(code)
 #+END_SRC
 
 #+RESULTS: initemacs_tofile
-: nil
+: None
+
 
 #+call: fread("em.sh")
 
-#+RESULTS:
-:
-: emacs -q -l /Users/mrfrp/org/init.el --eval "(run-hooks 'after-init-hook)" $1
+#+RESULTS: fread("em.sh")
+: emacs -q -l /home/frp/org/init.el --eval "(run-hooks 'after-init-hook)" $1
 
 *** Minimal Emacs Configuretion
 **** On User or Desktop Environment
@@ -243,6 +287,7 @@ ps afx
 #+END_SRC
 
 #+RESULTS:
+: -rw-rw-r-- 1 frp frp 74 Feb 28 13:27 /home/frp/org/em.sh
 
 **** On Superuser / Server Environment
 #+BEGIN_SRC sh :var path=pwd()
@@ -257,7 +302,6 @@ ls -la /bin/em
 | -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                                         |
 
 *** Close emacs , Restart emacs using "em" command
-*** Run "pipeserver" in command line
 *** Configure Prelude
 **** clone  backup previous
 ***** Backup
@@ -268,8 +312,8 @@ mv .emacs.d backup
 #+RESULTS:
 ***** Clone
 #+NAME: prelude_git
-#+BEGIN_SRC sh
-git clone git://github.com/bbatsov/prelude.git prelude
+#+BEGIN_SRC sh :dir ~
+cd ; git clone git://github.com/bbatsov/prelude.git .emacs.d
 #+END_SRC
 
 ***** Run Aync
@@ -280,35 +324,41 @@ git clone git://github.com/bbatsov/prelude.git prelude
 
 #+RESULTS: prelude_git_aync
 : command  is sended to /tmp/org
-
-**** make aync and copy the results
-#+call: wrap("prelude_git", "aync") :results raw
-
 **** copy prelude to .emacs.d
 #+BEGIN_SRC sh
 ls ~/.emacs.d
 #+END_SRC
 
 #+RESULTS:
-: auto-save-list
+| auto-save-list  |
+| CONTRIBUTING.md |
+| core            |
+| init.el         |
+| modules         |
+| personal        |
+| README.md       |
+| sample          |
+| themes          |
+| utils           |
+| vendor          |
 
-#+BEGIN_SRC sh
-mv prelude/* ~/.emacs.d
-#+END_SRC
-
-#+RESULTS:
 
 #+BEGIN_SRC sh
 ls ~/.emacs.d/.git
 #+END_SRC
 
 #+RESULTS:
-
-#+BEGIN_SRC sh
-mv prelude /tmp
-#+END_SRC
-
-#+RESULTS:
+| branches    |
+| config      |
+| description |
+| HEAD        |
+| hooks       |
+| index       |
+| info        |
+| logs        |
+| objects     |
+| packed-refs |
+| refs        |
 
 **** configaration
 ***** Add Important Modules
@@ -371,8 +421,7 @@ mv prelude /tmp
 #+NAME: customprelude
 #+BEGIN_SRC emacs-lisp
 ;;; hello
-(setq starter-kit-dir "~/org")
-(org-babel-load-file (expand-file-name "starter-kit.org" starter-kit-dir))
+(org-babel-load-file (expand-file-name "~/org/starter-kit.org" ))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -411,8 +460,7 @@ alias vi='emacsclient -t'
 export TERM=xterm-256color
 #+end_example
 
-#+call: fwrite("~/.bashrc",ealias)
-#+call: fread("~/.bashrc")
+#+call: addcodetofile(ealias,"~/.bashrc")
 
 ***** Emacs Setup For Arch Linux
 
@@ -470,3 +518,11 @@ emacs
 
 #+RESULTS: emacs_aync
 : command  is sended to /tmp/org
+**** Changes the modification to github
+#+NAME: gitconfig
+#+BEGIN_SRC sh
+  git config --global user.email "chowdhury.k.ashraf@gmail.com"  ;
+  git config --global user.name "Chowdhury Ashraf"
+#+END_SRC
+
+#+RESULTS: gitconfig

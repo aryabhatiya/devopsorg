@@ -4,13 +4,20 @@
 #+BEGIN_SRC elisp :var file=""
 (expand-file-name file)
 #+END_SRC
+
+#+RESULTS: pwd
+: /home/frp/org
+
 ** module
 #+NAME: module
-#+BEGIN_SRC elisp  :export none
+#+BEGIN_SRC elisp  :var filename = ""
   (last
    (split-string
-    (replace-regexp-in-string "/" " "   (expand-file-name "")) ))
+    (replace-regexp-in-string "/" " "   (expand-file-name filename)) ))
 #+END_SRC
+
+#+RESULTS: module
+| org |
 
 ** Keyboard Macro for diff
 #+BEGIN_EXAMPLE
@@ -123,12 +130,22 @@ BBL_START
 #+NAME: addcodetofile
 #+BEGIN_SRC elisp :var buffer=""  :var filename=""
   (with-temp-buffer
-;;  (insert-file-contents filename)
-  (insert buffer)
-  (when (file-writable-p filename)
-    (write-region (point-min) (point-max) filename nil))
+    (when (file-writable-p filename)
+      (insert-file-contents filename)
+      )
+    (insert "\n")
+    (insert buffer)
+    (insert "\n")
+    (when (file-writable-p filename)
+      (write-region (point-min) (point-max) filename nil))
   (buffer-string))
 #+END_SRC
+
+#+call: addcodetofile("z\n","/tmp/hello.test")
+
+#+RESULTS:
+: z
+: zAAzzzzdfdfabdcbdcabc
 
 * Setup.org
 ** Pandoc org to markdown_github

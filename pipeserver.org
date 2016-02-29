@@ -26,12 +26,13 @@
 #+BEGIN_SRC sh :var path=pwd() :dir /sudo:root@localhost:/usr/local/bin
 ls -l $path/bin/pipeserver
 cp $path/bin/pipeserver /usr/local/bin/
+chmod 755 /usr/local/bin/pipeserver
 ls -l /usr/local/bin/pipeserver
 #+END_SRC
 
 #+RESULTS:
-| -rwxr-xr-x | 1 | mrfrp | staff | 380 | Feb | 18 | 00:55 | /Users/mrfrp/org/bin/pipeserver |
-| -rwxr-xr-x | 1 | root  | admin | 380 | Feb | 18 | 00:57 | /usr/local/bin/pipeserver       |
+| -rwxr-xr-x | 1 | frp  | frp  | 380 | Feb | 27 | 18:39 | /home/frp/org/bin/pipeserver |
+| -rwxr-xr-x | 1 | root | root | 380 | Feb | 27 | 18:43 | /usr/local/bin/pipeserver    |
 
 *** Init Pipeserver Parameters
 #+NAME: init_pipeserver

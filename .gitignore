@@ -60,3 +60,6 @@ literate-starter-kit/
 literate-starter-kit.tar
 /pipeserver
 /starter-kit.el
+/#linux.org#
+/bin/pipeserver
+/em.sh
