@@ -254,7 +254,7 @@ sudo apt-get install aspell
 #+BEGIN_EXAMPLE
 brew install emacs
 #+END_EXAMPLE
-** Configaration
+** Emacs Configaration
 *** Make emacs Script
 #+NAME: initemacs
 #+begin_src sh :noweb yes
@@ -526,3 +526,23 @@ emacs
 #+END_SRC
 
 #+RESULTS: gitconfig
+** git update
+#+NAME: gitupdate
+#+BEGIN_EXAMPLE
+sudo apt-get install python-software-properties ;
+sudo add-apt-repository ppa:git-core/ppa ;
+sudo apt-get update ;
+sudo apt-get install git
+#+END_EXAMPLE
+
+#+call: cmdaync(gitupdate)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+#+BEGIN_SRC sh
+git --version
+#+END_SRC
+
+#+RESULTS:
+: git version 2.7.2
