@@ -1,0 +1,246 @@
+#+TAGS: CLOCKIN(k) SUDO(s) CLIPBOARD(c) TRUNCATE(e)
+#+SEQ_TODO: TODO TEST DONE
+* How to Find a Libarary
+M-x find-library RET kmacro
+M-x find-library RET edmacro
+* Wrap
+** Other
+#+NAME: wrap
+#+BEGIN_SRC elisp :var snippet="" :var process="" :var file="" :var post=post_cmd[0](process,file)
+  (with-temp-buffer
+    (insert "#+NAME: ")
+    (insert snippet)
+    (insert "\n")
+    (insert "#+BEGIN_SRC python :session :noweb yes")
+    (insert post)
+    (insert "\n")
+    (insert "\"\"\"\n<<")
+    (insert snippet)
+    (insert ">>\n\"\"\"\n")
+    (insert "#+END_SRC")
+    (buffer-string))
+#+END_SRC
+
+#+BEGIN_SRC elisp :var snippet="abc" :var process="txt" :var file="abc.txt" :var post=post_cmd[0] :restuls output
+  (with-temp-buffer
+    (cond  ((eq process  "aync")
+              (concat snippet "_" "aync")
+              (concat post ":post cmdaync(*this*)"))
+             ((eq process  "fwrite" )
+              (concat snippet "_" "aync")
+              (concat ":post fwrite("  "\"" file "\"" "," "*this*"))
+             (t (concat snippet "_" "txt")))
+    (insert snippet)
+    (insert "\n")
+    (insert post)(buffer-string))
+#+END_SRC
+
+#+RESULTS:
+: abc
+
+
+#+NAME: wrap
+#+BEGIN_SRC js :var snippet="abc" :var process="txt" :var file="del" :var post=""  :results raw
+  var gen_post = function () {
+      if (process === "aync") {
+          return ":post " + "cmdaync" +  "(" + "*this*" + ")";
+      }
+      if (process === "fwrite"){
+          return ":post " + "fwrite" + "(" + '"' +  file + '"' + "," + "*this*" + ")";
+      }
+      return post;
+  };
+  var code = "#+NAME: " + snippet + "_" + process + "\n";
+  code = code + "#+BEGIN_SRC python :session :noweb yes "  + gen_post() + "\n";
+  code = code + '"""<<' + snippet + '>>"""' + "\n";
+  code = code + "#+END_SRC";
+  console.log(code);
+  return 0;
+#+END_SRC
+
+#+RESULTS: wrap
+#+NAME: abc_txt
+#+BEGIN_SRC python :session :noweb yes
+"""<<abc>>"""
+#+END_SRC
+
+
+#+BEGIN_SRC elisp :var a="add" :var b="aync" :noweb yes
+  (with-temp-buffer
+    (insert <<post_cmd[0]("A","aync")>>)
+    (buffer-string)
+    )
+    (insert "#+BEGIN_SRC python :session :noweb yes")
+
+#+END_SRC
+
+#+RESULTS:
+:
+: undefined hello
+
+call_post_cmd("A","aync")
+
+* org
+** Org-Mode Hook -- Keybindings
+   :PROPERTIES:
+   :CUSTOM_ID: keybindings
+   :END:
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+                (local-set-key "\M-\C-n" 'outline-next-visible-heading)
+                (local-set-key "\M-\C-p" 'outline-previous-visible-heading)
+                (local-set-key "\M-\C-u" 'outline-up-heading)
+                ;; table
+                (local-set-key "\M-\C-w" 'org-table-copy-region)
+                (local-set-key "\M-\C-y" 'org-table-paste-rectangle)
+                (local-set-key "\M-\C-l" 'org-table-sort-lines)
+
+                ;; display images
+                (local-set-key "\M-I" 'org-toggle-iimage-in-org)))
+#+end_src
+
+** Speed keys
+   :PROPERTIES:
+   :CUSTOM_ID: speed-keys
+   :END:
+Speed commands enable single-letter commands in Org-mode files when
+the point is at the beginning of a headline, or at the beginning of a
+code block.
+
+See the `=org-speed-commands-default=' variable for a list of the keys
+and commands enabled at the beginning of headlines.  All code blocks
+are available at the beginning of a code block, the following key
+sequence =C-c C-v h= (bound to `=org-babel-describe-bindings=') will
+display a list of the code blocks commands and their related keys.
+
+#+begin_src emacs-lisp
+  (setq org-use-speed-commands t)
+#+end_src
+
+** The Library of Babel
+   :PROPERTIES:
+   :CUSTOM_ID: library-of-babel
+   :END:
+The library of babel contains makes many useful functions available
+for use by code blocks in *any* emacs file.  See the actual
+=library-of-babel.org= (located in the Org-mode =contrib/babel=
+directory) file for information on the functions, and see
+[[http://orgmode.org/worg/org-contrib/babel/intro.php#library-of-babel][worg:library-of-babel]] for more usage information.
+
+Code blocks can be loaded into the library of babel from any Org-mode
+file using the `org-babel-lob-ingest' function.
+
+* Implementation
+  :PROPERTIES:
+  :CUSTOM_ID: implementation
+  :END:
+
+This section contains all code implementing the Emacs Starter Kit.  It
+is probably safe to stop reading at this point unless you are
+interested in the actual code implementing the starter kit.
+
+- Function for loading other parts of the starter kit
+  #+name: starter-kit-load
+  #+begin_src emacs-lisp
+    (defun starter-kit-load (file &optional header-or-tag)
+      "Load configuration from other starter-kit-*.org files.
+    If the optional argument is the id of a subtree then only
+    configuration from within that subtree will be loaded.  If it is
+    not an id then it will be interpreted as a tag, and only subtrees
+    marked with the given tag will be loaded.
+
+    For example, to load all of starter-kit-lisp.org simply
+    add (starter-kit-load \"lisp\") to your configuration.
+
+    To load only the 'window-system' config from
+    starter-kit-misc-recommended.org add
+     (starter-kit-load \"misc-recommended\" \"window-system\")
+    to your configuration."
+      (let ((file (expand-file-name (if (string-match "starter-kit-.+\.org" file)
+                                        file
+                                      (format "starter-kit-%s.org" file))
+                                    starter-kit-dir)))
+        (org-babel-load-file
+         (if header-or-tag
+             (let* ((base (file-name-nondirectory file))
+                    (dir  (file-name-directory file))
+                    (partial-file (expand-file-name
+                                   (concat "." (file-name-sans-extension base)
+                                           ".part." header-or-tag ".org")
+                                   dir)))
+               (unless (file-exists-p partial-file)
+                 (with-temp-file partial-file
+                   (insert
+                    (with-temp-buffer
+                      (insert-file-contents file)
+                      (save-excursion
+                        (condition-case nil ;; collect as a header
+                            (progn
+                              (org-link-search (concat"#"header-or-tag))
+                              (org-narrow-to-subtree)
+                              (buffer-string))
+                          (error ;; collect all entries with as tags
+                           (let (body)
+                             (org-map-entries
+                              (lambda ()
+                                (save-restriction
+                                  (org-narrow-to-subtree)
+                                  (setq body (concat body "\n" (buffer-string)))))
+                              header-or-tag)
+                             body))))))))
+               partial-file)
+           file))))
+  #+end_src
+
+- Remove Menu bar, tool bar, start up messages
+ #+NAME: starter-kit-remove_unnecessary
+ #+BEGIN_SRC emacs-lisp
+  (when window-system
+    (tooltip-mode -1)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (scroll-bar-mode -1))
+  (setq inhibit-startup-message t)
+#+END_SRC
+
+** Starter kit core
+   :PROPERTIES:
+   :CUSTOM_ID: starter-kit-core
+   :END:
+The following files contain the remainder of the core of the Emacs
+Starter Kit.  All of the code in this section should be loaded by
+everyone using the starter kit.
+
+# - Starter kit function definitions in [[file:starter-kit-defuns.org][starter-kit-defuns]]
+#   #+begin_src emacs-lisp
+#   (starter-kit-load "starter-kit-defuns.org")
+#   #+end_src
+
+# - Key Bindings in [[file:starter-kit-bindings.org][starter-kit-bindings]]
+#   #+begin_src emacs-lisp
+#   (starter-kit-load "starter-kit-bindings.org")
+#   #+end_src
+
+# - Miscellaneous settings in [[file:starter-kit-misc.org][starter-kit-misc]]
+#   #+begin_src emacs-lisp
+#   (starter-kit-load "starter-kit-misc.org")
+#   #+end_src
+
+# - Registers for jumping to commonly used files in [[file:starter-kit-registers.org][starter-kit-registers]]
+#   #+begin_src emacs-lisp
+#   (starter-kit-load "starter-kit-registers.org")
+#   #+end_src
+
+#   #+RESULTS:
+#   : Loaded /home/rks/literalemacs/starter-kit-registers.el
+
+*** Truncate Line
+   :PROPERTIES:
+   :CUSTOM_ID: starter-kit-truncate
+   :END:
+
+ #+NAME: starter-kit-truncate
+ #+BEGIN_SRC emacs-lisp
+ (setq-default truncate-lines nil)
+ #+END_SRC

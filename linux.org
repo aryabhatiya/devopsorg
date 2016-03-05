@@ -6,7 +6,6 @@ ps afx | grep emacs | grep -v grep
 
 #+RESULTS:
 : 2504 ?        Sl     0:30 emacs
-
 ** TODO reptry pid.
    [2015-11-27 শুক্র]
 
@@ -606,17 +605,6 @@ mdohs92 * 3088
 #+BEGIN_SRC sh
 pppd call ispd
 #+END_SRC
-
-
-* DONE git version
-#+BEGIN_SRC sh
-git --version
-
-#+END_SRC
-
-#+RESULTS:
-: git version 1.9.1
-
 * DONE eccential python install
   CLOSED: [2016-01-03 রবি 06:48]
 #+BEGIN_SRC sh :dir /sudo::

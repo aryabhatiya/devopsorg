@@ -1,5 +1,4 @@
 #+TITLE: Emacs Starter Kit (http://github.com/chowdhuryashraf/literate-devops)
-#+OPTIONS: toc:2 num:nil ^:nil
 * Org
 ** Code blocks
 *** Load Language
@@ -64,6 +63,48 @@ much more like reading and editing of code using its major mode.
 #+RESULTS:
 : 19
 
+** Wrap Commands
+   :PROPERTIES:
+   :CUSTOM_ID: babel-wrap
+   :END:
+#+BEGIN_SRC emacs-lisp
+  (defun devops-wrapper ()
+    (interactive)
+    (let* ((txt (buffer-substring (mark) (point)))
+           (trimedtxt  (replace-regexp-in-string (rx (* (any " \t\n")) eos)
+                                                     ""
+                                                     txt))
+           (name (read-from-minibuffer "Program: "))
+           (lines (split-string name " "))
+           (sproc (split-string (car lines) "-"))
+           (proc-name (car sproc))
+           (is-src (if (eq (length sproc) 2)  (substring (car (last sproc)) 0 1) "" ))
+           (is-lang (if (eq (length sproc) 2)  (substring (car (last sproc)) 1 2) "" ))
+           (is-aync (if (eq (length sproc) 2)  (substring (car (last sproc)) 2 3) "" ))
+           (src (if (string-equal is-src "s") "SRC" "EXAMPLE" ))
+           (lang (cond ((string-equal is-lang "e") "emacs-lisp")
+                       ((string-equal is-lang "j" ) "js")
+                       ((string-equal is-lang "p") "python")
+                       ((string-equal is-lang "s") "sh")
+                       (t "")))
+           (aync (if (string-equal is-aync "n")
+                     ""
+                   (concat
+                    "\n" "#+call: cmdaync(" proc-name ")"
+                    )))
+           (proc (cdr lines) ))
+      (kill-region (mark) (point))
+      (insert (concat
+               "#+NAME: " proc-name  "\n"
+               "#+BEGIN_" src " " lang  (mapconcat  #'(lambda (s) s )  proc " ") "\n"
+               trimedtxt "\n"
+               "#+END_" src
+               aync
+               ))))
+#+END_SRC
+
+#+RESULTS:
+: devops-wrapper
 ** Org-Mode Hook -- Keybindings
    :PROPERTIES:
    :CUSTOM_ID: keybindings
@@ -78,7 +119,7 @@ much more like reading and editing of code using its major mode.
                 (local-set-key "\M-\C-w" 'org-table-copy-region)
                 (local-set-key "\M-\C-y" 'org-table-paste-rectangle)
                 (local-set-key "\M-\C-l" 'org-table-sort-lines)
-
+                (local-set-key (kbd "<f9>") 'devops-wrapper)
                 ;; display images
                 (local-set-key "\M-I" 'org-toggle-iimage-in-org)))
 #+end_src
@@ -116,7 +157,7 @@ work flow.
 #+RESULTS:
 : org-capture
 
-**  Clocking work time
+** Clocking work time
    :PROPERTIES:
    :CUSTOM_ID: code-block-org-clock
    :END:
@@ -546,3 +587,129 @@ git --version
 
 #+RESULTS:
 : git version 2.7.2
+** Install node Using NVM
+*** Introduction
+An alternative to installing Node.js through apt is to use a specially designed tool called nvm, which stands
+for "Node.js version manager".
+
+Using nvm, you can install multiple, self-contained versions of Node.js which will allow you to control your
+environment easier. It will give you on-demand access to the newest versions of Node.js, but will also allow
+you to target previous releases that your app may depend on.
+
+To start off, we'll need to get the software packages from our Ubuntu repositories that will allow us to
+build source packages. The nvm script will leverage these tools to build the necessary components:
+
+*** Dev Depandency
+
+#+NAME: devdepnvm
+#+BEGIN_EXAMPLE
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev
+#+END_EXAMPLE
+
+
+Once the prerequisite packages are installed, you can pull down the nvm installation script from the
+project's GitHub page. The version number may be different, but in general, you can download and install it
+with the following syntax:
+
+*** Download Depandency
+
+#+NAME: download-nvm
+#+BEGIN_EXAMPLE
+curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
+#+END_EXAMPLE
+
+
+This will download the script and run it. It will install the software into a subdirectory of your home
+directory at ~/.nvm. It will also add the necessary lines to your ~/.profile file to use the file.
+
+To gain access to the nvm functionality, you'll need to log out and log back in again, or you can source the ~
+/.profile file so that your current session knows about the changes:
+
+#+NAME: sp
+#+BEGIN_EXAMPLE
+source ~/.profile
+#+END_EXAMPLE
+
+
+Now that you have nvm installed, you can install isolated Node.js versions.
+
+To find out the versions of Node.js that are available for installation, you can type:
+
+#+NAME: nvm-remote
+#+BEGIN_SRC
+nvm ls-remote
+#+END_SRC
+
+-------------------------------------------------------------------------------------------------------------
+. . .
+ v0.11.6
+ v0.11.7
+ v0.11.8
+ v0.11.9
+v0.11.10
+v0.11.11
+v0.11.12
+v0.11.13
+
+As you can see, the newest version at the time of this writing is v0.11.13. You can install that by typing:
+
+#+NAME: nvm-install
+#+BEGIN_EXAMPLE
+nvm install 0.11.13
+#+END_EXAMPLE
+
+
+Usually, nvm will switch to use the most recently installed version. You can explicitly tell nvm to use the
+version we just downloaded by typing:
+
+nvm use 0.11.13
+
+When you install Node.js using nvm, the executable is called node. You can see the version currently being
+used by the shell by typing:
+
+node -v
+-------------------------------------------------------------------------------------------------------------
+v.0.11.13
+
+If you have multiple Node.js versions, you can see what is installed by typing:
+
+nvm ls
+
+If you wish to default one of the versions, you can type:
+
+nvm alias default 0.11.13
+
+This version will be automatically selected when a new session spawns. You can also reference it by the alias
+like this:
+
+nvm use default
+
+Each version of Node.js will keep track of its own packages and has npm available to manage these.
+
+You can have npm install packages to the Node.js project's ./node_modules directory by using the normal
+format:
+
+
+npm install express
+
+If you'd like to install it globally (available to the other projects using the same Node.js version), you
+can add the -g flag:
+
+
+npm install -g express
+
+This will install the package in:
+
+
+~/.nvm/node_version/lib/node_modules/package_name
+
+Installing globally will let you run the commands from the command line, but you'll have to use link the
+package into your local sphere to require it from within a program:
+
+
+npm link express
+
+You can learn more about the options available to you with nvm by typing:
+
+nvm help
