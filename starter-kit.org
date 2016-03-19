@@ -104,8 +104,8 @@ much more like reading and editing of code using its major mode.
 #+END_SRC
 
 #+RESULTS:
-: devops-wrapper
-** Org-Mode Hook -- Keybindings
+=devops-wrapper
+=** Org-Mode Hook -- Keybindings
    :PROPERTIES:
    :CUSTOM_ID: keybindings
    :END:
@@ -713,3 +713,72 @@ npm link express
 You can learn more about the options available to you with nvm by typing:
 
 nvm help
+** Install Clojure Script
+*** Oracle JDK 7
+
+This is a developer preview, the general release is scheduled for March 2014. This external article about Java 8 may help you to understand what it's all about.
+
+#+NAME: oraclejvm
+#+BEGIN_EXAMPLE
+sudo add-apt-repository ppa:webupd8team/java ;
+sudo apt-get update ;
+sudo apt-get install oracle-jdk7-installer
+#+END_EXAMPLE
+
+#+call: cmdaync(oraclejvm)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+**** Test Java Verstion
+#+NAME: javaver
+#+BEGIN_EXAMPLE
+java -version
+#+END_EXAMPLE
+#+call: cmdaync(javaver)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+*** Download the lein script
+#+NAME: lein
+#+BEGIN_EXAMPLE
+wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+#+END_EXAMPLE
+#+call: cmdaync(lein)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+#+BEGIN_SRC sh
+ls -l lein
+#+END_SRC
+
+#+RESULTS:
+: -rw-rw-r-- 1 frp frp 12871 মার্চ   9 00:03 lein
+
+*** Place it on your $PATH where your shell can find it (eg. ~/bin)
+Set it to be executable (chmod a+x ~/bin/lein)
+#+BEGIN_SRC sh
+chmod +x lein
+#+END_SRC
+
+#+NAME: leinmv
+#+BEGIN_EXAMPLE
+sudo mv lein /usr/local/bin/
+#+END_EXAMPLE
+#+call: cmdaync(leinmv)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+*** Run it (lein) and it will download the self-install package
+#+NAME: leininstall
+#+BEGIN_EXAMPLE
+chmod +x /usr/local/bin/lein ;
+lein
+#+END_EXAMPLE
+#+call: cmdaync(leininstall)
+
+#+RESULTS:
+: command  is sended to /tmp/org
