@@ -3,6 +3,12 @@
 * How to Find a Libarary
 M-x find-library RET kmacro
 M-x find-library RET edmacro
+* Disable menubar , toolbar scrollbar
+#+BEGIN_SRC elisp
+(menu-bar-mode -1 )
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+#+END_SRC
 * Wrap
 ** Other
 #+NAME: wrap

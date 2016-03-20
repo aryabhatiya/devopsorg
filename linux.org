@@ -691,3 +691,53 @@ sudo sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_re
 #+BEGIN_SRC sh
 ls -l
 #+END_SRC
+x* Install PDF tools for emacs
+** Installation of Dependencies
+#+NAME: pdftools
+#+BEGIN_EXAMPLE
+ sudo apt-get install libpng-dev libz-dev  ;
+ sudo apt-get install libpoppler-glib-dev ;
+ sudo apt-get install libpoppler-private-dev
+#+END_EXAMPLE
+#+call: cmdaync(pdftools)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+#+NAME: imagemagic
+#+BEGIN_EXAMPLE
+sudo apt-get install imagemagick
+#+END_EXAMPLE
+#+call: cmdaync(imagemagic)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+** Compile the Source
+
+#+NAME: orgdevops
+#+BEGIN_EXAMPLE
+cd .. ;
+git clone https://github.com/politza/pdf-tools.git ;
+cd pdf-tools ;
+make install-server-deps ;
+make -s
+#+END_EXAMPLE
+#+call: cmdaync(orgdevops)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+#+NAME: empdftools
+#+BEGIN_EXAMPLE
+make install-package
+#+END_EXAMPLE
+#+call: cmdaync(empdftools)
+
+#+RESULTS:
+: command  is sended to /tmp/org
+
+** Install
+#+BEGIN_SRC elisp
+(pdf-tools-install)
+#+END_SRC

@@ -9,15 +9,11 @@ cd .. ; lein new app clojure-noob
 
 #+RESULTS:
 : command is sended to /tmp/org
-
-** Parens Of the Dead
-
-#+NAME: projectinit
-#+BEGIN_EXAMPLE
-cd .. ;
-mkdir parens-of-the-dead ;
-cd parens-of-the-dead ;
-git init
-#+END_EXAMPLE
-
-#+call: cmdaync(projectinit)
+** Collection Types
+*** Persistence, sequences, and complexity
+*** Vectors: creating and using them in all their varieties
+*** Lists: Clojure’s code form data structure
+*** How to use persistent queues
+*** Persistent sets
+*** Thinking in maps
+*** Finding the position of items in a sequence
