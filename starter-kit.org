@@ -201,6 +201,15 @@ work flow.
 #+RESULTS:
 : time
 
+** Disable menubar , toolbar scrollbar
+   :PROPERTIES:
+   :CUSTOM_ID: disable-toolbar
+   :END:
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1 )
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+#+END_SRC
 ** The Library of Babel
    :PROPERTIES:
    :CUSTOM_ID: library-of-babel
@@ -340,7 +349,7 @@ ls -la /bin/em
 
 #+RESULTS:
 | -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /usr/local/src/literate-devops/em.sh |
-| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                                         |
+| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                              |
 
 *** Close emacs , Restart emacs using "em" command
 *** Configure Prelude
@@ -404,7 +413,7 @@ ls ~/.emacs.d/.git
 **** configaration
 ***** Add Important Modules
 #+NAME: prelude-modules
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_EXAMPLE
 ;;; Uncomment the modules you'd like to use and restart Prelude afterwards
 
 ;; Emacs IRC client
@@ -443,24 +452,16 @@ ls ~/.emacs.d/.git
 (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 (require 'prelude-yaml)
-#+END_SRC
+#+END_EXAMPLE
 
-#+NAME: prelude-modules_fwrite
-#+BEGIN_SRC python :session :noweb yes :post fwrite("~/.emacs.d/prelude-modules.el",*this*)
-"""
-<<prelude-modules>>
-"""
-#+END_SRC
-
-#+RESULTS: prelude-modules_fwrite
-: nil
-
+#+call: fwrite("~/.emacs.d/prelude-modules.el",prelude-modules)
+****** testing
 #+call: fread("~/.emacs.d/prelude-modules.el")
 
 ***** Add devops and orgmode
 
 #+NAME: customprelude
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_EXAMPLE
 ;;; hello
 (org-babel-load-file (expand-file-name "~/org/starter-kit.org" ))
 (custom-set-variables
@@ -475,18 +476,11 @@ ls ~/.emacs.d/.git
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-#+END_SRC
+#+END_EXAMPLE
 
-#+NAME: customprelude_fwrite
-#+BEGIN_SRC python :session :noweb yes :post fwrite("~/.emacs.d/personal/custom.el",*this*)
-"""
-<<customprelude>>
-"""
-#+END_SRC
+#+call: fwrite("~/.emacs.d/personal/custom.el","customprelude")
 
-#+RESULTS: customprelude_fwrite
-: nil
-
+****** test
 #+call: fread("~/.emacs.d/personal/custom.el")
 
 ***** Emacs Setup For Debain
