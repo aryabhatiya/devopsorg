@@ -1,5 +1,67 @@
 #+TAGS: CLOCKIN(k) SUDO(s) CLIPBOARD(c) TRUNCATE(e)
 #+SEQ_TODO: TODO TEST DONE
+* Howto Emacs
+** Text manipulation
+** Rectangle Mode
+*** Delete "C-x r d"
+*** rectangle-mark-mode
+*** cua-resize-rectangle-right
+** Regex
+*** Syntax
+**** Double Quate
+     CLOSED: [2015-11-23 সোম 22:07]
+| PatternMatches                                  |
+| "\([^"]+\)" capture text between double quotes. |
+| "hello world"                                   |
+
+*** Matching Newline ＆ Tab
+**** To enter a new line, press 【Ctrl+q Ctrl+j】
+**** To enter a Tab character, press 【Ctrl+q Tab ↹】
+***  Boundary anchors
+| \`…                           |
+| Beginning of {string, buffer} |
+| …\'                           |
+| End of {string, buffer}       |
+| \b                            |
+| word boundary marker          |
+
+** Clipboard [2/3]                                                :CLIPBOARD:
+  - [ ] Meta clipboard-kill-ring-save
+  - [X] clipboard-kill-region
+  - [X] clipboard-yank
+** M-x RET set-variable RET
+** Cursor Movement and Location [16/16]
+        - [X] arrow keys (if available)N/AMove cursor.
+        - [X] C-abeginning-of-lineMove to beginning of line.
+        - [X] C-eend-of-lineMove to end of line.
+        - [X] C-fforward-charMove forward one character.
+        - [X] C-bbackward-charMove backward one character.
+        - [X] M-f forward-wordMove󿿿 forward one word.
+        - [X] M-bbackward-wordMove backward one word.
+        - [X] C-nnext-lineMove down a line (creating the next line, if necessary).
+        - [X] C-pprevious-lineMove up a line.
+        - [X] M-r move-to-window-lineMove to left margin, vertically centered in window.
+        - [X] M-<beginning-of-bufferMove to top of buffer.
+        - [X] M->end-of-bufferMove to end of buffer.
+        - [X] M-x goto-chargoto-charRead a number and go to that buffer position (start = 1).
+        - [X] M-x goto-line goto-line Read a number and go to that line (first line = 1).
+        - [X] M-=count-lines-regionPrint number of lines in current region.
+        - [X] C-x =what-cursor-postitionPrint character code, character position and column of the cursor location.
+        - [ ] Setting Mark C-@ -> (c shfit 1 )
+        - [ ] C-w . . Kill region. This deletes and puts the region into the kill ring.
+        - [ ] C-y . . Yank. This inserts the last snippet from the kill ring.
+        - [ ] M-y . . Cycle kill ring. Immediately after C-y, this replaces the yanked part by the other snippets in the kill ring.
+        - [ ] M-w . . Save region into kill ring. Like C-w, but doesn't delete.
+        - [ ] In short, you start selection like usual with C-spc, then kill region with C-x r k and paste/yank killed block with C-x r y
+        - [ ] C-x b buffer RET
+        - [ ] C-x 4 buffer RET - another window ( switch-to-buffer-other-window )
+        - [ ] C-x 4 b buffer RET another frame
+** Evaluate all code chunks below current header
+It sounds like you want org-babel-execute-buffer or org-babel-execute-subtree (C-c C-v s).
+** Emacs in Bash
+emacs --batch --load ~/.emacs \
+      --eval "(progn (require 'org-mobile) (org-mobile-push))"
+** org updown M-S-<up> and M-S-<down>
 * How to Find a Libarary
 M-x find-library RET kmacro
 M-x find-library RET edmacro
