@@ -11,14 +11,15 @@ to activate more languages using the customize interface for the
 one below.  The customize interface of `=org-babel-load-languages='
 contains an up to date list of the currently supported languages.
 #+begin_src emacs-lisp
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((emacs-lisp . t)
-         (lisp . t)
-         (sh . t)
-         (js .t )
-         (haskell . t)
-         (python . t)))
+        (org-babel-do-load-languages
+         'org-babel-load-languages
+         '((emacs-lisp . t)
+           (lisp . t)
+           (sh . t)
+           (js .t )
+           (haskell . t)
+           (python . t)
+           (clojure . t)))
 #+end_src
 *** default executable
    :PROPERTIES:

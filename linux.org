@@ -678,15 +678,18 @@ pacstrap /mnt base base-devel xorg xorg-server xorg-server-utils xorg-apps xorg-
 sudo sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_release -cs)' contrib non-free' > /etc/apt/sources.list.d/virtualbox.list" && wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - && sudo apt-get update && sudo apt-get install virtualbox-5.0
 #+END_SRC
 * Install Pandoc
-#+call: cmdaync("apt-get install haskell-platform haskell-platform-doc")
+#+call: cmdaync("sudo apt-get install haskell-platform haskell-platform-doc")
 #+call: cmdaync("cabal update && cabal install cabal-install ")
 #+call: cmdaync("cabal install ghc-mod hoogle hlint pointfree")
 #+call: cmdaync("cabal install pandoc")
 
 #+RESULTS:
-: command  is sended to /tmp/friends-aneesha
+: command  is sended to /tmp/org
 
-#+call: cmdaync("find / -name  pandoc\\*")
+#+call: cmdaync("sudo find / -name  pandoc\\*")
+
+#+RESULTS:
+: command  is sended to /tmp/org
 
 #+BEGIN_SRC sh
 ls -l

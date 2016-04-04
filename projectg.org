@@ -1,0 +1,29 @@
+* Seduler
+** TODO Install JAVA & Boot
+** TODO Installing Seduler
+* Remotie File Sharing
+** DONE Install sshfs
+   CLOSED: [2016-04-05 মঙ্গল 00:25]
+   - CLOSING NOTE [2016-04-05 মঙ্গল 00:25] \\
+     debiansshfs:0.0.1
+** TODO Script for sshfs
+** TODO Genterate RSA Token
+* Boot Commands
+* Docker Commnads
+docker images
+docker run -it debain-bangla:update ls
+docker history debain-bangla
+docker build -t
+docker run -d -p 3000:3000 micro:0.5
+docker-machine ip micro:0.5
+docker pull hello-world:latest
+docker save -o hello.tar hello-world:latest
+
+** Copy for production
+sudo docker save -o debiansshfs_gp.docker debiansshfs:0.0.1
+sudo docker load debiansshfs_gp.docker
+* TODO Emacs
+** apt emacs
+** apt git
+** clone prelude
+** Prelude

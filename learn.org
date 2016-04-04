@@ -1,4 +1,6 @@
 * Clojue
+** TODO Debug Boot
+(boot.core/load-data-readers!)
 ** Creating A New Clojure Project
 #+NAME: apwd2
 #+BEGIN_EXAMPLE
@@ -10,10 +12,47 @@ cd .. ; lein new app clojure-noob
 #+RESULTS:
 : command is sended to /tmp/org
 ** Collection Types
+   :LOGBOOK:
+   CLOCK: [2016-03-21 সোম 13:56]--[2016-03-21 সোম 14:21] =>  0:25
+   CLOCK: [2016-03-21 সোম 13:20]--[2016-03-21 সোম 13:45] =>  0:25
+   CLOCK: [2016-03-21 সোম 12:50]--[2016-03-21 সোম 13:15] =>  0:25
+   CLOCK: [2016-03-21 সোম 00:16]--[2016-03-21 সোম 00:44] =>  0:28
+   CLOCK: [2016-03-21 সোম 00:52]--[2016-03-21 সোম 01:05] =>  0:13
+   CLOCK: [2016-03-21 সোম 01:05]--[2016-03-21 সোম 01:15] =>  0:10
+   CLOCK: [2016-03-21 সোম 01:20]--[2016-03-21 সোম 01:45] =>  0:25
+   CLOCK: [2016-03-21 সোম 01:59]--[2016-03-21 সোম 02:24] =>  0:25
+   CLOCK: [2016-03-21 সোম 02:55]--[2016-03-21 সোম 03:20] =>  0:25
+   CLOCK: [2016-03-21 সোম 03:27]--[2016-03-21 সোম 03:57] =>  0:30
+   :END:
+
 *** Persistence, sequences, and complexity
+you keep using that word. i don't think it means what you think it mean. Although storage
+of disk may be more common meaning of persistent today, meaning of the word do with immutable
+in-memory collection with specific properties. In particular, a persisitent collection in Clojure allows
+you to preserve historical versions of it's state and promies that all versions will have the savme update and lookup complexity gurantees.
+This specific gurantees depend on the collection type.
+Difference Between a persistent data structure and one that's on by using a Jvva array
+
+#+BEGIN_SRC clojue
+(def ds (into-array [:willie :barnabas :adam]))
+(seq ds)
+#+END_SRC
+
 *** Vectors: creating and using them in all their varieties
 *** Lists: Clojure’s code form data structure
 *** How to use persistent queues
 *** Persistent sets
 *** Thinking in maps
 *** Finding the position of items in a sequence
+** Clojure for Brave and True
+   :LOGBOOK:
+   CLOCK: [2016-03-25 শুক্র 00:29]--[2016-03-25 শুক্র 00:54] =>  0:25
+   CLOCK: [2016-03-24 বৃহঃ 23:54]--[2016-03-25 শুক্র 00:19] =>  0:25
+   :END:
+*** Functional Programming
+    :LOGBOOK:
+    CLOCK: [2016-03-25 শুক্র 17:37]
+    CLOCK: [2016-03-25 শুক্র 17:01]--[2016-03-25 শুক্র 17:26] =>  0:25
+    CLOCK: [2016-03-25 শুক্র 15:05]--[2016-03-25 শুক্র 15:30] =>  0:25
+    CLOCK: [2016-03-25 শুক্র 01:03]--[2016-03-25 শুক্র 01:28] =>  0:25
+    :END:
