@@ -6,7 +6,7 @@ xmobar and trayer.
 To install them in Arch Linux, run this command:
 
 #+NAME: xmonad_install
-#+BEGIN_SRC sh
+#+BEGIN_SRC shen
  pacman -S xmonad xmonad-contrib xmobar trayer
 #+END_SRC
 
