@@ -30,7 +30,7 @@
   - [X] clipboard-kill-region
   - [X] clipboard-yank
 ** M-x RET set-variable RET
-** Cursor Movement and Location [16/16]
+** Cursor Movement and Location [18/25]
         - [X] arrow keys (if available)N/AMove cursor.
         - [X] C-abeginning-of-lineMove to beginning of line.
         - [X] C-eend-of-lineMove to end of line.
@@ -47,8 +47,8 @@
         - [X] M-x goto-line goto-line Read a number and go to that line (first line = 1).
         - [X] M-=count-lines-regionPrint number of lines in current region.
         - [X] C-x =what-cursor-postitionPrint character code, character position and column of the cursor location.
-        - [ ] Setting Mark C-@ -> (c shfit 1 )
-        - [ ] C-w . . Kill region. This deletes and puts the region into the kill ring.
+        - [X] Setting Mark C-@ -> (c shfit 1 )
+        - [X] C-w . . Kill region. This deletes and puts the region into the kill ring.
         - [ ] C-y . . Yank. This inserts the last snippet from the kill ring.
         - [ ] M-y . . Cycle kill ring. Immediately after C-y, this replaces the yanked part by the other snippets in the kill ring.
         - [ ] M-w . . Save region into kill ring. Like C-w, but doesn't delete.
