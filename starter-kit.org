@@ -21,6 +21,9 @@ contains an up to date list of the currently supported languages.
            (python . t)
            (clojure . t)))
 #+end_src
+
+#+RESULTS:
+
 *** default executable
    :PROPERTIES:
    :CUSTOM_ID: babel_eval_yes
@@ -31,6 +34,8 @@ although it is not added by default as a security precaution.
 #+begin_src emacs-lisp
   (setq org-confirm-babel-evaluate nil)
 #+end_src
+
+#+RESULTS:
 
 ** Code block fontification
    :PROPERTIES:
@@ -62,7 +67,7 @@ much more like reading and editing of code using its major mode.
 #+END_SRC
 
 #+RESULTS:
-: 19
+: devops
 
 ** Wrap Commands
    :PROPERTIES:
@@ -103,46 +108,6 @@ much more like reading and editing of code using its major mode.
                aync
                ))))
 #+END_SRC
-
-#+RESULTS:
-=devops-wrapper
-=** Org-Mode Hook -- Keybindings
-   :PROPERTIES:
-   :CUSTOM_ID: keybindings
-   :END:
-#+begin_src emacs-lisp
-  (add-hook 'org-mode-hook
-            (lambda ()
-                (local-set-key "\M-\C-n" 'outline-next-visible-heading)
-                (local-set-key "\M-\C-p" 'outline-previous-visible-heading)
-                (local-set-key "\M-\C-u" 'outline-up-heading)
-                ;; table
-                (local-set-key "\M-\C-w" 'org-table-copy-region)
-                (local-set-key "\M-\C-y" 'org-table-paste-rectangle)
-                (local-set-key "\M-\C-l" 'org-table-sort-lines)
-                (local-set-key (kbd "<f9>") 'devops-wrapper)
-                ;; display images
-                (local-set-key "\M-I" 'org-toggle-iimage-in-org)))
-#+end_src
-
-** Speed keys
-   :PROPERTIES:
-   :CUSTOM_ID: speed-keys
-   :END:
-Speed commands enable single-letter commands in Org-mode files when
-the point is at the beginning of a headline, or at the beginning of a
-code block.
-
-See the `=org-speed-commands-default=' variable for a list of the keys
-and commands enabled at the beginning of headlines.  All code blocks
-are available at the beginning of a code block, the following key
-sequence =C-c C-v h= (bound to `=org-babel-describe-bindings=') will
-display a list of the code blocks commands and their related keys.
-
-#+begin_src emacs-lisp
-  (setq org-use-speed-commands t)
-#+end_src
-
 ** Org Capture
    :PROPERTIES:
    :CUSTOM_ID: code-block-org-capture
@@ -172,7 +137,7 @@ To save the clock history across Emacs sessions, use
 #+END_SRC
 
 #+RESULTS:
-: org-capture
+| org-clock-save | org-babel-remove-temporary-directory |
 
 ** Org Agenda files
    :PROPERTIES:
@@ -186,7 +151,7 @@ work flow.
 #+END_SRC
 
 #+RESULTS:
-| ~/org | ~/literate-emacs/ |
+| ~/org |
 ** Closing items
    :PROPERTIES:
    :CUSTOM_ID: code-block-org-closing-items
@@ -200,7 +165,7 @@ work flow.
 #+END_SRC
 
 #+RESULTS:
-: time
+: note
 
 ** Disable menubar , toolbar scrollbar
    :PROPERTIES:
@@ -211,157 +176,16 @@ work flow.
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 #+END_SRC
-** The Library of Babel
-   :PROPERTIES:
-   :CUSTOM_ID: library-of-babel
-   :END:
-The library of babel contains makes many useful functions available
-for use by code blocks in *any* emacs file.  See the actual
-=library-of-babel.org= (located in the Org-mode =contrib/babel=
-directory) file for information on the functions, and see
-[[http://orgmode.org/worg/org-contrib/babel/intro.php#library-of-babel][worg:library-of-babel]] for more usage information.
 
-Code blocks can be loaded into the library of babel from any Org-mode
-file using the `org-babel-lob-ingest' function.
+#+RESULTS:
 
 * Installation
    :PROPERTIES:
    :CUSTOM_ID: installation
    :END:
-** Install Emacs version 24 or greater
-*** Build [[~/org/pipeserver.org][ PipeServer ]]
-*** Installation In Linux
-**** Arch Linux
-#+BEGIN_SRC sh
- pacman -S sudo
-#+END_SRC
-
-**** Debain / Ubuntu
-****** [[http://ubuntuhandbook.org/index.php/2014/10/emacs-24-4-released-install-in-ubuntu-14-04/][emacs 24.4 install ubuntu]]
-****** Build prerecusites
-#+NAME: emacsdep
-#+BEGIN_EXAMPLE
-sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
-#+END_EXAMPLE
-
-#+call: cmdaync(emacsdep)
-
-#+RESULTS: cmdaync(emacsdep)
-: command  is sended to /tmp/org
-
-****** Download 24.5 prepare installations
-#+NAME: em25
-#+BEGIN_EXAMPLE
-cd .. ;
-wget http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz  ;
-xz -d emacs-24.5.tar.xz ;
-tar -xvf emacs-24.5.tar ;
-#+END_EXAMPLE
-
-#+call: cmdaync(em25)
-
-#+NAME: em25conf
-#+BEGIN_EXAMPLE
-cd emacs-24.5  ;
-./configure
-#+END_EXAMPLE
-
-#+call: cmdaync(em25conf)
-
-#+NAME: em25install
-#+BEGIN_EXAMPLE
-make ; sudo make install
-#+END_EXAMPLE
-
-#+call: cmdaync(em25install)
-
-#+RESULTS: cmdaync(em25install)
-: command  is sended to /tmp/org
-#+NAME: embin
-#+BEGIN_SRC sh :dir /sudo:root@localhost:/usr/local/bin
-mv /usr/local/bin/emacs /usr/local/bin/emacs.old
-ln -s `which emacs-24.5` /usr/local/bin/emacs
-#+END_SRC
-
-#+RESULTS: embin
-
-****** aspell
-#+NAME: aspellinstall
-#+BEGIN_EXAMPLE
-sudo apt-get install aspell
-#+END_EXAMPLE
-
-#+call: cmdaync(aspellinstall)
-
-#+RESULTS: cmdaync(aspellinstall)
-: command  is sended to /tmp/org
-
-#+call: cmdaync("cd ../org ; pwd ")
-
-#+RESULTS: cmdaync("cd ../org ; pwd ")
-: command  is sended to /tmp/org
-
-*** Installation in Max OSX
-#+BEGIN_EXAMPLE
-brew install emacs
-#+END_EXAMPLE
 ** Emacs Configaration
-*** Make emacs Script
-#+NAME: initemacs
-#+begin_src sh :noweb yes
-  emacs -q -l <<pwd()>>/init.el --eval "(run-hooks 'after-init-hook)" $1
-#+end_src
-
-#+call: wrap("initemacs") :results raw
-
-#+NAME: initemacs_tofile
-#+BEGIN_SRC python :session :noweb yes :var filename="em.sh"
-code =  """<<initemacs>>"""
-open(filename, 'w').write(code)
-#+END_SRC
-
-#+RESULTS: initemacs_tofile
-: None
-
-
-#+call: fread("em.sh")
-
-#+RESULTS: fread("em.sh")
-: emacs -q -l /home/frp/org/init.el --eval "(run-hooks 'after-init-hook)" $1
-
-*** Minimal Emacs Configuretion
-**** On User or Desktop Environment
-#+BEGIN_SRC sh :var path=pwd()   :dir /sudo:root@localhost:/usr/local/bin
-  ls -la $path/em.sh
-  cp $path/em.sh  em
-  chmod 755 em
-#+END_SRC
-
-#+RESULTS:
-: -rw-rw-r-- 1 frp frp 74 Feb 28 13:27 /home/frp/org/em.sh
-
-**** On Superuser / Server Environment
-#+BEGIN_SRC sh :var path=pwd()
-ls -la $path/em.sh
-cp $path/em.sh  /bin/em
-chmod 755 /bin/em
-ls -la /bin/em
-#+END_SRC
-
-#+RESULTS:
-| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /usr/local/src/literate-devops/em.sh |
-| -rwxr-xr-x | 1 | root | root | 158 | Jan | 22 | 18:06 | /bin/em                              |
-
-*** Close emacs , Restart emacs using "em" command
 *** Configure Prelude
-**** clone  backup previous
-***** Backup
-#+BEGIN_SRC sh :dir ~
-mv .emacs.d backup
-#+END_SRC
-
-#+RESULTS:
-***** Clone
+**** Clone
 #+NAME: prelude_git
 #+BEGIN_SRC sh :dir ~
 cd ; git clone git://github.com/bbatsov/prelude.git .emacs.d
@@ -381,35 +205,16 @@ ls ~/.emacs.d
 #+END_SRC
 
 #+RESULTS:
-| auto-save-list  |
 | CONTRIBUTING.md |
+| README.md       |
 | core            |
 | init.el         |
 | modules         |
 | personal        |
-| README.md       |
 | sample          |
 | themes          |
 | utils           |
 | vendor          |
-
-
-#+BEGIN_SRC sh
-ls ~/.emacs.d/.git
-#+END_SRC
-
-#+RESULTS:
-| branches    |
-| config      |
-| description |
-| HEAD        |
-| hooks       |
-| index       |
-| info        |
-| logs        |
-| objects     |
-| packed-refs |
-| refs        |
 
 **** configaration
 ***** Add Important Modules
@@ -562,26 +367,7 @@ emacs
 #+END_SRC
 
 #+RESULTS: gitconfig
-** git update
-#+NAME: gitupdate
-#+BEGIN_EXAMPLE
-sudo apt-get install python-software-properties ;
-sudo add-apt-repository ppa:git-core/ppa ;
-sudo apt-get update ;
-sudo apt-get install git
-#+END_EXAMPLE
 
-#+call: cmdaync(gitupdate)
-
-#+RESULTS:
-: command  is sended to /tmp/org
-
-#+BEGIN_SRC sh
-git --version
-#+END_SRC
-
-#+RESULTS:
-: git version 2.7.2
 ** Install node Using NVM
 *** Introduction
 An alternative to installing Node.js through apt is to use a specially designed tool called nvm, which stands
