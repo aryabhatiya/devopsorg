@@ -122,3 +122,33 @@ node index.js
 
 #+RESULTS:
 : command  is sended to /tmp/devopsorg
+* Javascript
+** test1
+#+BEGIN_SRC js
+console.log("hello world");
+#+END_SRC
+
+#+RESULTS:
+: hello world
+: undefined
+
+**  Install js6
+#+NAME: babel
+#+BEGIN_EXAMPLE
+npm install --save-dev babel babel-cli
+#+END_EXAMPLE
+#+call: cmdaync(babel)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+** test2
+
+#+BEGIN_SRC js :cmd "/home/xen1/devopsorg/node_modules/.bin/babel-node"
+let i = 1;
+console.log(i);
+#+END_SRC
+
+#+RESULTS:
+: 1
+: undefined
