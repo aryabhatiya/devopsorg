@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/chowdhuryashraf/devopsorg/issues"
   },
-  "homepage": "https://github.com/chowdhuryashraf/devopsorg#readme"
+  "homepage": "https://github.com/chowdhuryashraf/devopsorg#readme",
+  "dependencies": {
+    "ssh2": "^0.5.4"
+  }
 }

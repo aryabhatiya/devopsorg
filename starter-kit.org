@@ -1,5 +1,4 @@
 #+TITLE: Emacs Starter Kit (http://github.com/chowdhuryashraf/literate-devops)
-
 * Installation
    :PROPERTIES:
    :CUSTOM_ID: installation

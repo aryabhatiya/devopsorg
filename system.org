@@ -1,0 +1,124 @@
+* set root password
+#+NAME: rpass
+#+BEGIN_EXAMPLE
+sudo passwd root
+#+END_EXAMPLE
+#+call: cmdaync(rpass)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+* Install sshd
+#+NAME: sshd
+#+BEGIN_EXAMPLE
+sudo pacman -S openssh
+#+END_EXAMPLE
+#+call: cmdaync(sshd)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+** Find IP Address
+#+BEGIN_SRC sh
+ip link
+#+END_SRC
+
+#+RESULTS:
+|            2: | enp2s0:           | <BROADCAST,MULTICAST,UP,LOWER_UP> | mtu               |  1500 | qdisc | fq_codel | state | UP      | mode | DEFAULT | group | default | qlen | 1000 |
+|    link/ether | 74:d4:35:06:c1:81 | brd                               | ff:ff:ff:ff:ff:ff |       |       |          |       |         |      |         |       |         |      |      |
+** Net Tools
+#+NAME: nettools
+#+BEGIN_EXAMPLE
+sudo pacman -S net-tools
+#+END_EXAMPLE
+#+call: cmdaync(nettools)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+#+BEGIN_SRC sh
+ifconfig enp2s0
+#+END_SRC
+
+#+RESULTS:
+| enp2s0: | flags=4163<UP,BROADCAST,RUNNING,MULTICAST> |        mtu |          1500 |            |               |      |         |   |            |   |
+| inet    | 192.168.0.100                              |    netmask | 255.255.255.0 |  broadcast | 192.168.0.255 |      |         |   |            |   |
+| inet6   | fe80::76d4:35ff:fe06:c181                  |  prefixlen |            64 |    scopeid | 0x20<link>    |      |         |   |            |   |
+| ether   | 74:d4:35:06:c1:81                          | txqueuelen |          1000 | (Ethernet) |               |      |         |   |            |   |
+| RX      | packets                                    |       9821 |         bytes |   13432861 | (12.8         | MiB) |         |   |            |   |
+| RX      | errors                                     |          0 |       dropped |          4 | overruns      |    0 | frame   | 0 |            |   |
+| TX      | packets                                    |       6783 |         bytes |     527141 | (514.7        | KiB) |         |   |            |   |
+| TX      | errors                                     |          0 |       dropped |          0 | overruns      |    0 | carrier | 0 | collisions | 0 |
+|         |                                            |            |               |            |               |      |         |   |            |   |
+
+** Enable and Start sshd
+#+BEGIN_SRC sh
+sudo systemctl enable sshd
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC sh
+sudo systemctl start sshd
+#+END_SRC
+
+#+RESULTS:
+
+** run syncmd
+#+NAME: test1
+#+BEGIN_EXAMPLE
+ls -la
+#+END_EXAMPLE
+#+call: cmdaync(test1)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+** ssh keygen
+#+NAME: sshgen
+#+BEGIN_EXAMPLE
+ssh-keygen
+#+END_EXAMPLE
+#+call: cmdaync(sshgen)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+#+NAME: rsshgen
+#+BEGIN_EXAMPLE
+sudo ssh-keygen
+#+END_EXAMPLE
+#+call: cmdaync(rsshgen)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+#+END_SRC
+* ssh key exchanges
+#+BEGIN_SRC sh
+sudo cp /home/xen1/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+sudo cp /root/.ssh/id_rsa.pub /home/xen1/.ssh/authorized_keys
+#+END_SRC
+
+#+RESULTS:
+
+* ssh with javascript
+** Install
+#+NAME: ssh2
+#+BEGIN_EXAMPLE
+cd /home/xen1/devopsorg ;
+npm --save install ssh2
+#+END_EXAMPLE
+#+call: cmdaync(ssh2)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg
+
+** SSh testRun
+#+NAME: sshtest
+#+BEGIN_EXAMPLE
+node index.js
+#+END_EXAMPLE
+#+call: cmdaync(sshtest)
+
+#+RESULTS:
+: command  is sended to /tmp/devopsorg

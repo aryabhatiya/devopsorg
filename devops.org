@@ -59,10 +59,10 @@ much more like reading and editing of code using its major mode.
    :END:
 
 #+BEGIN_SRC emacs-lisp
-  (org-babel-lob-ingest (expand-file-name "~/org/devops.org"))
+  (org-babel-lob-ingest (expand-file-name "~/devopsorg/devops.org"))
   (defun devops()
       (interactive)
-      (org-babel-lob-ingest (expand-file-name "~/org/devops.org")))
+      (org-babel-lob-ingest (expand-file-name "~/devopsorg/devops.org")))
 #+END_SRC
 
 #+RESULTS:
@@ -184,7 +184,7 @@ work flow.
 #+END_SRC
 
 #+RESULTS: module
-| org |
+| devopsorg |
 
 ** Keyboard Macro for diff
 #+BEGIN_EXAMPLE
@@ -235,7 +235,6 @@ y			;; self-insert-command
 #+END_SRC
 
 #+RESULTS: check_pipeserver_running
-: command  is sended to /tmp/friends-aneesha
 
 * file contents
 ** Write string
@@ -397,19 +396,14 @@ write_bages= <<beginsh>>
 
 #+RESULTS: write_bages
 * Send data to PIPE
-   CLOCK: [2016-01-13 Wed 05:47]--[2016-01-13 Wed 05:58] =>  0:11
-   :PROPERTIES:
-   :Effort:   0:10
-   :END:
 #+NAME: cmdaync
 #+BEGIN_SRC sh :var cmd="" :var mod=module[0] :noweb yes
 <<check_pipeserver_running>>
 echo  $cmd   > $pipe
 #+END_SRC
 
-#+RESULTS:
-: command npm adduser is sended to /tmp/friends-aneesha
-
+#+RESULTS: cmdaync
+| command | is | sended | to | /tmp/devopsorg |
 *** check_pipeserver_running
 #+NAME: check_pipeserver_running
 #+BEGIN_SRC sh
@@ -444,4 +438,14 @@ pipe="/tmp/"$mod
   console.log(code);
   return 0;
 #+END_SRC
-* Aync
+** Hello World
+
+#+NAME: abc
+#+BEGIN_EXAMPLE
+sudo uname -a
+#+END_EXAMPLE
+#+call: cmdaync(abc)
+
+#+RESULTS:
+| command | is | sended | to | /tmp/devopsorg |
+| command | is | sended | to | /tmp/devopsorg |
