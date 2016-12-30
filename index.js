@@ -3,7 +3,7 @@ var Client = require('ssh2').Client;
 var conn = new Client();
 conn.on('ready', function() {
   console.log('Client :: ready');
-  conn.exec('/home/xen1/devopsorg/abc.sh', function(err, stream) {
+  conn.exec('ls -l', function(err, stream) {
     if (err) throw err;
     stream.on('close', function(code, signal) {
       console.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
@@ -17,6 +17,6 @@ conn.on('ready', function() {
 }).connect({
   host: '192.168.0.100',
   port: 22,
-  username: 'root',
-  privateKey: require('fs').readFileSync('/home/xen1/.ssh/id_rsa')
+  username: 'xen1',
+  privateKey: require('fs').readFileSync('/root/.ssh/id_rsa')
 });

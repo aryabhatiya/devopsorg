@@ -25,7 +25,7 @@ elpa/*
 src/*
 themes/*
 url/*
-
+node_modules/*
 ## exported and encrypted files
 *gpg
 *elc
@@ -63,3 +63,5 @@ literate-starter-kit.tar
 /#linux.org#
 /bin/pipeserver
 /em.sh
+/devops.el
+

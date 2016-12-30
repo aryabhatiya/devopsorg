@@ -11,23 +11,6 @@
 cd ; git clone git://github.com/bbatsov/prelude.git .emacs.d
 #+END_SRC
 
-**** copy prelude to .emacs.d
-#+BEGIN_SRC sh
-ls ~/.emacs.d
-#+END_SRC
-
-#+RESULTS:
-| CONTRIBUTING.md |
-| README.md       |
-| core            |
-| init.el         |
-| modules         |
-| personal        |
-| sample          |
-| themes          |
-| utils           |
-| vendor          |
-
 **** configaration
 ***** Add Important Modules
 #+NAME: prelude-modules
